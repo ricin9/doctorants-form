@@ -1,10 +1,8 @@
 import { drizzle, type PostgresJsDatabase } from 'drizzle-orm/postgres-js';
-import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import postgres from 'postgres';
-import { DATABASE_URL } from '$env/static/private';
+import dotenv from 'dotenv';
 
+dotenv.config();
 // for query purposes
-const queryClient = postgres(DATABASE_URL);
+const queryClient = postgres(process.env.DATABASE_URL as string);
 export const db: PostgresJsDatabase = drizzle(queryClient);
-
-await migrate(db, { migrationsFolder: 'drizzle' });
