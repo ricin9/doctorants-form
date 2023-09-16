@@ -1,1 +1,5 @@
-import { db } from "$lib/server/db";
+import { redirect } from '@sveltejs/kit';
+
+export function load() {
+	throw redirect(307, '/login');
+}
