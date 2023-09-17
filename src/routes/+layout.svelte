@@ -6,7 +6,7 @@
 
 {#if data?.uid}
 	<h1>
-		sup {data.uid}
+		you are logged in {data.uid}
 	</h1>
 {/if}
 <slot />
