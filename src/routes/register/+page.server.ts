@@ -15,7 +15,7 @@ const schema = z
 		if (val.password !== val.confirmPassword) {
 			ctx.addIssue({
 				code: z.ZodIssueCode.custom,
-				message: 'Les mots de passe ne correspondent pas',
+				message: 'les mots de passe ne correspondent pas',
 				path: ['confirmPassword']
 			});
 		}
