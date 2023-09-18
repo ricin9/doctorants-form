@@ -32,7 +32,6 @@ export const load = async () => {
 export const actions = {
 	default: async ({ request }) => {
 		const form = await superValidate(request, schema);
-		console.log('POST', form);
 
 		if (!form.valid) {
 			// Again, always return { form } and things will just work.
