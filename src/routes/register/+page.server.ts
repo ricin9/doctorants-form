@@ -1,9 +1,9 @@
 import { db } from '$lib/server/db/index.js';
 import { user } from '$lib/server/db/schemas/user.js';
 import { fail, redirect } from '@sveltejs/kit';
-import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
-import { superValidate } from 'sveltekit-superforms/server';
+import { setError, superValidate } from 'sveltekit-superforms/server';
+import { generateHash } from '$lib/server/crypto.js';
 
 const schema = z
 	.object({
@@ -39,33 +39,16 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		// TODO: Do something with the validated form.data
-
+		try {
+			await db.insert(user).values({
+				email: form.data.email,
+				password: await generateHash(form.data.password)
+			});
+		} catch (err) {
+			setError(form, 'email', 'cet email est déjà utilisé');
+			return { form };
+		}
 		// Yep, return { form } here too
-		return { form };
-		// try {
-		// 	const valid = await registrationSchema.parseAsync(formData);
-		// } catch (err) {
-		// 	console.log('validation error', err);
-		// }
-
-		// const queryResult = await db
-		// 	.select()
-		// 	.from(user)
-		// 	.where(and(eq(user.email, formData.get('email') as string)))
-		// 	.limit(1);
-
-		// if (
-		// 	queryResult.length === 0 ||
-		// 	!(await verifyHash(queryResult[0].password, formData.get('password') as string))
-		// ) {
-		// 	return fail(400, {
-		// 		error: 'Email ou mot de passe incorrect'
-		// 	});
-		// }
-
-		// success
-		// TODO : set cookie
-		// throw redirect(303, '/dashboard');
+		throw redirect(303, '/login?success=true');
 	}
 };
