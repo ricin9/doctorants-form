@@ -1,8 +1,5 @@
-import { db } from '$lib/server/db/index.js';
-import { user } from '$lib/server/db/schemas/user.js';
 import { fail, redirect } from '@sveltejs/kit';
-import { setError, superValidate } from 'sveltekit-superforms/server';
-import { generateHash } from '$lib/server/crypto.js';
+import { superValidate } from 'sveltekit-superforms/server';
 import { schema } from './doc.registration.schema';
 
 export const load = async ({ locals }) => {
@@ -25,15 +22,16 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		try {
-			await db.insert(user).values({
-				email: form.data.email,
-				password: await generateHash(form.data.password)
-			});
-		} catch (err) {
-			setError(form, 'email', 'cet email est déjà utilisé');
-			return { form };
-		}
+		// try {
+		// 	await db.insert(user).values({
+		// 		email: form.data.email,
+		// 		password: await generateHash(form.data.password)
+		// 	});
+		// } catch (err) {
+		// 	setError(form, 'email', 'cet email est déjà utilisé');
+		// 	return { form };
+		// }
+		return { form };
 		// Yep, return { form } here too
 		throw redirect(303, '/login?success=true');
 	}
