@@ -19,15 +19,23 @@ export const schema = z
 		matriculeBac: z.number().int().positive(),
 		nom: alphabeticStringField(),
 		prenom: alphabeticStringField(),
-		nomAr: alphabeticStringField('ar-DZ'),
-		prenomAr: alphabeticStringField('ar-DZ'),
-		gender: z.enum(['M', 'F']),
+		lieuNaissance: alphabeticStringField('fr-FR', 100),
 		dateNaissance: z.coerce
 			.date()
 			.min(new Date(1900, 1, 1))
 			.max(new Date(new Date().setFullYear(new Date().getFullYear() - 18)))
 			.transform((val) => val.toISOString().split('T')[0]),
-		lieuNaissance: alphabeticStringField('fr-FR', 100),
-		lieuNaissanceAr: alphabeticStringField('ar-DZ', 100)
+		gender: z.enum(['M', 'F']), // TODO
+		nomAr: alphabeticStringField('ar-DZ'),
+		prenomAr: alphabeticStringField('ar-DZ'),
+		lieuNaissanceAr: alphabeticStringField('ar-DZ', 100),
+		annePrevueSoutenance: z.number().int().min(2023).max(2050),
+		typeDoctorat: z.enum(['M', 'F']), // TODO
+		nomDirecteur: alphabeticStringField(),
+		prenomDirecteur: alphabeticStringField(),
+		gradeDirecteur: alphabeticStringField(), // TODO
+		nomCoDirecteur: alphabeticStringField(),
+		prenomCoDirecteur: alphabeticStringField(),
+		gradeCoDirecteur: alphabeticStringField() // TODO
 	})
 	.partial();
