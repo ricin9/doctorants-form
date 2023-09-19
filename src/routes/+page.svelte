@@ -6,6 +6,7 @@
 	import TextField from '$lib/components/TextField.svelte';
 	import DateInput from '$lib/components/DateInput.svelte';
 	import GenderRadioInput from './GenderRadioInput.svelte';
+	import SelectSearch from '$lib/components/SelectSearch.svelte';
 
 	export let data;
 
@@ -16,9 +17,10 @@
 <form
 	method="POST"
 	use:enhance
-	class="flex max-w-7xl flex-col gap-4 mx-auto mt-8 border rounded px-8 pt-6 pb-8 mb-4"
+	class="flex max-w-7xl flex-col gap-8 mx-auto mt-8 border rounded px-8 pt-6 pb-8 mb-4 divide-y-4 divide-solid"
 >
 	<div>
+		<h2 class="text-3xl mb-4">Détail du doctorant</h2>
 		<div class="flex gap-4">
 			<TextField {form} field="anneBac" label="Année du BAC" class="w-24" type="number" />
 			<TextField {form} field="matriculeBac" label="Matricule du BAC" class="w-28" type="number" />
@@ -34,6 +36,42 @@
 			<TextField {form} field="nomAr" label="Nom arabe" class="w-56" />
 			<TextField {form} field="prenomAr" label="Prenom arabe" class="w-56" />
 			<TextField {form} field="lieuNaissanceAr" label="Lieu de naissance arabe" class="w-56" />
+		</div>
+		<div class="flex gap-4">
+			<SelectSearch label="Domaine" width="w-56" />
+			<SelectSearch label="Filière" width="w-56" />
+			<SelectSearch label="Specialité" width="w-56" />
+			<TextField
+				{form}
+				field="anneBac"
+				label="Année prévue de soutenance"
+				class="w-24"
+				type="number"
+			/>
+			<GenderRadioInput {form} field="typeDoctorat" label="Type de doctorat" />
+		</div>
+	</div>
+	<div>
+		<h2 class="text-3xl my-4">Information du directeur de thèse</h2>
+		<div class="flex gap-4">
+			<TextField {form} field="nom" label="Nom" class="w-56" />
+			<TextField {form} field="prenom" label="Prenom" class="w-56" />
+			<TextField {form} field="nom" label="Grade de directeur" class="w-56" />
+		</div>
+		<div class="flex gap-4">
+			<SelectSearch label="Domaine" width="w-[29rem]" />
+		</div>
+	</div>
+
+	<div>
+		<h2 class="text-3xl my-4">Information du co-directeur de thèse (si existe)</h2>
+		<div class="flex gap-4">
+			<TextField {form} field="nom" label="Nom" class="w-56" />
+			<TextField {form} field="prenom" label="Prenom" class="w-56" />
+			<TextField {form} field="nom" label="Grade de directeur" class="w-56" />
+		</div>
+		<div class="flex gap-4">
+			<SelectSearch label="Domaine" width="w-[29rem]" />
 		</div>
 	</div>
 	<Button type="submit">Inscrire</Button>
