@@ -40,9 +40,15 @@
 			<TextField {form} field="lieuNaissanceAr" label="Lieu de naissance arabe" class="w-56" />
 		</div>
 		<div class="flex gap-4">
-			<SelectSearch label="Domaine" width="w-56" search={searchSpecialty} />
-			<SelectSearch label="Filière" width="w-56" />
-			<SelectSearch label="Specialité" width="w-56" />
+			<SelectSearch {form} field="domain" label="Domaine" width="w-56" search={searchSpecialty} />
+			<SelectSearch {form} field="filiere" label="Filière" width="w-56" search={searchSpecialty} />
+			<SelectSearch
+				{form}
+				field="speciality"
+				label="Specialité"
+				width="w-56"
+				search={searchSpecialty}
+			/>
 			<TextField
 				{form}
 				field="annePrevueSoutenance"
@@ -61,7 +67,13 @@
 			<TextField {form} field="gradeDirecteur" label="Grade de directeur" class="w-56" />
 		</div>
 		<div class="flex gap-4">
-			<SelectSearch label="Domaine" width="w-[29rem]" />
+			<SelectSearch
+				{form}
+				field="etablissementDirecteur"
+				label="Etablissement"
+				width="w-[29rem]"
+				search={searchSpecialty}
+			/>
 		</div>
 	</div>
 
@@ -73,7 +85,13 @@
 			<TextField {form} field="gradeCoDirecteur" label="Grade de directeur" class="w-56" />
 		</div>
 		<div class="flex gap-4">
-			<SelectSearch label="Domaine" width="w-[29rem]" />
+			<SelectSearch
+				{form}
+				field="etablissementCoDirecteur"
+				label="Etablissement"
+				width="w-[29rem]"
+				search={searchSpecialty}
+			/>
 		</div>
 	</div>
 	<Button type="submit">Inscrire</Button>

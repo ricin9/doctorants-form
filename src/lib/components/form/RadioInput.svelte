@@ -14,9 +14,10 @@
 
 	export let form: SuperForm<ZodValidation<T>, unknown>;
 	export let field: FormPathLeaves<z.infer<T>>;
+	const { value, errors, constraints } = formFieldProxy(form, field);
+
 	export let label: string = field;
 	export let data: { value: AcceptedRadioValues; label: string }[];
-	const { value, errors, constraints } = formFieldProxy(form, field);
 
 	const derivedValue = value as Writable<AcceptedRadioValues | undefined>;
 </script>

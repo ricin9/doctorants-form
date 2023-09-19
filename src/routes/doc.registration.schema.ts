@@ -25,7 +25,7 @@ export const schema = z
 			.min(new Date(1900, 1, 1))
 			.max(new Date(new Date().setFullYear(new Date().getFullYear() - 18)))
 			.transform((val) => val.toISOString().split('T')[0]),
-		gender: z.enum(['M', 'F']), // TODO
+		gender: z.enum(['M', 'F']),
 		nomAr: alphabeticStringField('ar-DZ'),
 		prenomAr: alphabeticStringField('ar-DZ'),
 		lieuNaissanceAr: alphabeticStringField('ar-DZ', 100),
@@ -34,8 +34,13 @@ export const schema = z
 		nomDirecteur: alphabeticStringField(),
 		prenomDirecteur: alphabeticStringField(),
 		gradeDirecteur: alphabeticStringField(), // TODO
+		etablissementDirecteur: z.number().int().positive('vous devez sélectionner un choix'),
 		nomCoDirecteur: alphabeticStringField(),
 		prenomCoDirecteur: alphabeticStringField(),
-		gradeCoDirecteur: alphabeticStringField() // TODO
+		gradeCoDirecteur: alphabeticStringField(), // TODO
+		etablissementCoDirecteur: z.number().int().positive('vous devez sélectionner un choix'),
+		domain: z.number().int().positive('vous devez sélectionner un choix'),
+		speciality: z.number().int().positive('vous devez sélectionner un choix'),
+		filiere: z.number().int().positive('vous devez sélectionner un choix')
 	})
 	.partial();
