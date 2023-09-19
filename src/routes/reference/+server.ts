@@ -1,7 +1,8 @@
 import { json } from '@sveltejs/kit';
 import { schema, type ReferenceParams } from './schema.js';
+import { searchSpecialty } from './queries.js';
 
-export function GET({ url }) {
+export async function GET({ url }) {
 	let params: ReferenceParams;
 	try {
 		params = schema.parse({
@@ -12,6 +13,5 @@ export function GET({ url }) {
 		return new Response(null, { status: 400 });
 	}
 
-	// todo : drizzle query
-	return json(params);
+	return json(await searchSpecialty(params.query));
 }

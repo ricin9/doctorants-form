@@ -7,6 +7,7 @@
 	import DateInput from '$lib/components/DateInput.svelte';
 	import GenderRadioInput from './GenderRadioInput.svelte';
 	import SelectSearch from '$lib/components/SelectSearch.svelte';
+	import { searchSpecialty } from './referenceApiClient';
 
 	export let data;
 
@@ -38,7 +39,7 @@
 			<TextField {form} field="lieuNaissanceAr" label="Lieu de naissance arabe" class="w-56" />
 		</div>
 		<div class="flex gap-4">
-			<SelectSearch label="Domaine" width="w-56" />
+			<SelectSearch label="Domaine" width="w-56" search={searchSpecialty} />
 			<SelectSearch label="Filière" width="w-56" />
 			<SelectSearch label="Specialité" width="w-56" />
 			<TextField
