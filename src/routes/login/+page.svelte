@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { superForm } from 'sveltekit-superforms/client';
-	import { Alert, Button, Input, Label } from 'flowbite-svelte';
-	import TextField from '$lib/components/TextField.svelte';
+	import { Alert, Button, Helper, Input, Label } from 'flowbite-svelte';
 	import { page } from '$app/stores';
+	import TextField from '$lib/components/form/TextField.svelte';
 
 	export let data;
 
@@ -16,8 +16,10 @@
 <form
 	method="POST"
 	use:enhance
-	class="flex max-w-md flex-col gap-4 mx-auto mt-24 border rounded px-8 pt-6 pb-8 mb-4"
+	class="flex max-w-md flex-col gap-4 mx-auto mt-12 border rounded px-8 pt-6 pb-8 mb-4"
 >
+	<h2 class="text-3xl mb-4 mx-auto">Connexion</h2>
+
 	{#if registrationSuccess == 'true'}
 		<Alert color="green">
 			Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.
@@ -31,4 +33,9 @@
 	<TextField {form} field="email" label="Email" />
 	<TextField {form} field="password" label="Mot de pass" type="password" />
 	<Button type="submit">Connexion</Button>
+	<Helper>
+		<p class="text-center">
+			Vous n'avez pas de compte ? <a href="/register" class="text-primary-800">Inscrivez-vous</a>
+		</p>
+	</Helper>
 </form>
