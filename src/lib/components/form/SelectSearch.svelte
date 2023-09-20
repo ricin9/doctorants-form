@@ -31,12 +31,12 @@
 	async function handleInput(event: any) {
 		query = event.target.value;
 		results = await search(query);
-		results.length > 0 ? ($value = results[0].id) : ($value = 0);
+		results.length > 0 ? ($value = results[0].id) : ($value = undefined);
 	}
 
 	onMount(async () => {
 		results = await search('');
-		results.length > 0 ? ($value = results[0].id) : ($value = 0);
+		results.length > 0 ? ($value = results[0].id) : ($value = undefined);
 	});
 </script>
 

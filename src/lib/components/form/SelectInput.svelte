@@ -14,8 +14,8 @@
 	export let form: SuperForm<ZodValidation<T>, unknown>;
 	export let field: FormPathLeaves<z.infer<T>>;
 	export let data: {
-		id: number | string;
-		name: string;
+		value: number | string;
+		label: string;
 	}[];
 	export let label = 'Selectionnez';
 	const { value: genericValue, errors, constraints } = formFieldProxy(form, field);
@@ -35,7 +35,7 @@
 	>
 		{#if data.length > 0}
 			{#each data as entry}
-				<option value={entry.id}>{entry.name}</option>
+				<option value={entry.value}>{entry.label}</option>
 			{/each}
 		{/if}
 	</Select>

@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { superForm } from 'sveltekit-superforms/client';
 	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
-	import { Button, Radio } from 'flowbite-svelte';
+	import { Alert, Button, Radio, Spinner } from 'flowbite-svelte';
 	import { searchSpecialty } from './referenceApiClient';
-	import { genderOptions, gradesOptions, typeDoctoratOptions } from './formEnums';
+	import { doctorateTypeOptions, genderOptions, gradesOptions } from '../lib/common/formEnums';
 	import TextField from '$lib/components/form/TextField.svelte';
 	import DateInput from '$lib/components/form/DateInput.svelte';
 	import RadioInput from '$lib/components/form/RadioInput.svelte';
@@ -13,12 +12,17 @@
 
 	export let data;
 
-	const form = superForm(data.form);
+	const form = superForm(data.form, {
+		delayMs: 300,
+		timeoutMs: 8000
+	});
+
+	const { delayed, errors } = form;
 </script>
 
 <form
 	method="POST"
-	use:enhance
+	use:form.enhance
 	class="flex max-w-7xl flex-col gap-8 mx-auto mt-12 ring-primary-500 ring-1 rounded px-8 pt-6 pb-8 mb-4 divide-y divide-solid divide-primary-500"
 >
 	<div>
@@ -26,6 +30,20 @@
 		<div class="flex gap-4">
 			<TextField {form} field="anneBac" label="Année du BAC" class="w-24" type="number" />
 			<TextField {form} field="matriculeBac" label="Matricule du BAC" class="w-28" type="number" />
+			<TextField
+				{form}
+				field="anneePremiereInscription"
+				label="Année du première inscription"
+				class="w-56"
+				type="number"
+			/>
+			<TextField
+				{form}
+				field="annePrevueSoutenance"
+				label="Année prévue de soutenance"
+				class="w-56"
+				type="number"
+			/>
 		</div>
 		<div class="flex gap-4">
 			<TextField {form} field="nom" label="Nom" class="w-56" />
@@ -49,14 +67,14 @@
 				width="w-56"
 				search={searchSpecialty}
 			/>
-			<TextField
+			<TextField {form} field="autre_speciality" label="Specialité (autre)" class="w-56" />
+
+			<RadioInput
 				{form}
-				field="annePrevueSoutenance"
-				label="Année prévue de soutenance"
-				class="w-56"
-				type="number"
+				field="typeDoctorat"
+				label="Type de doctorat"
+				data={doctorateTypeOptions}
 			/>
-			<RadioInput {form} field="typeDoctorat" label="Type de doctorat" data={typeDoctoratOptions} />
 		</div>
 	</div>
 	<div>
@@ -85,6 +103,11 @@
 
 	<div>
 		<h2 class="text-3xl my-4 text-primary-700">Information du co-directeur de thèse (si existe)</h2>
+		{#if $errors?._errors && $errors?._errors.length > 0}
+			<Alert color="red" class="first-letter:uppercase">
+				{$errors?._errors[0]}
+			</Alert>
+		{/if}
 		<div class="flex gap-4">
 			<TextField {form} field="nomCoDirecteur" label="Nom" class="w-56" />
 			<TextField {form} field="prenomCoDirecteur" label="Prenom" class="w-56" />
@@ -106,7 +129,13 @@
 			/>
 		</div>
 	</div>
-	<Button type="submit">Inscrire</Button>
+
+	<Button type="submit" disabled={$delayed}>
+		{#if $delayed}
+			<Spinner class="mr-3" size="4" />
+		{/if}
+		Inscrire
+	</Button>
 </form>
 
 <SuperDebug data={form.form} />

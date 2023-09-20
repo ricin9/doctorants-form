@@ -22,17 +22,6 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		// try {
-		// 	await db.insert(user).values({
-		// 		email: form.data.email,
-		// 		password: await generateHash(form.data.password)
-		// 	});
-		// } catch (err) {
-		// 	setError(form, 'email', 'cet email est déjà utilisé');
-		// 	return { form };
-		// }
 		return { form };
-		// Yep, return { form } here too
-		throw redirect(303, '/login?success=true');
 	}
 };
