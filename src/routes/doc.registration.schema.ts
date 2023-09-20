@@ -1,6 +1,11 @@
 import { z } from 'zod';
 import validator from 'validator';
-import { doctorateTypeEnum, genderEnum, gradesEnum } from '../lib/common/formEnums';
+import {
+	doctorateTypeEnum,
+	genderEnum,
+	gradesEnum,
+	situationProfessionnelleEnum
+} from '../lib/common/formEnums';
 
 function alphabeticStringField(lang: 'ar-DZ' | 'fr-FR' = 'fr-FR', max: number = 50) {
 	return z
@@ -19,6 +24,7 @@ const gradesZodEnum = z.enum(gradesEnum);
 
 export const schema = z
 	.object({
+		// info personal
 		anneBac: z.number().int().min(1960).max(2017),
 		matriculeBac: z.number().int().positive(),
 		anneePremiereInscription: z.number().int().min(1960).max(2023),
@@ -36,10 +42,14 @@ export const schema = z
 		lieuNaissanceAr: alphabeticStringField('ar-DZ', 100),
 		annePrevueSoutenance: z.number().int().min(2023).max(2050),
 		typeDoctorat: z.enum(doctorateTypeEnum),
+
+		// info directeur de these
 		nomDirecteur: alphabeticStringField(),
 		prenomDirecteur: alphabeticStringField(),
 		gradeDirecteur: gradesZodEnum,
 		etablissementDirecteur: z.number().int().positive('vous devez sélectionner un choix'),
+
+		// info co-directeur de these
 		nomCoDirecteur: alphabeticStringField().optional(),
 		prenomCoDirecteur: alphabeticStringField().optional(),
 		gradeCoDirecteur: gradesZodEnum.optional(),
@@ -48,10 +58,19 @@ export const schema = z
 			.int()
 			.positive('vous devez sélectionner un choix')
 			.optional(),
+
+		// info academique reference
 		domain: z.number().int().positive('vous devez sélectionner un choix'),
 		speciality: z.number().int().positive('vous devez sélectionner un choix'),
 		filiere: z.number().int().positive('vous devez sélectionner un choix'),
-		autre_speciality: alphabeticStringField('fr-FR', 96).optional()
+		autre_speciality: alphabeticStringField('fr-FR', 96).optional(),
+
+		//info doctorat
+		laboratoiteRattachement: alphabeticStringField('fr-FR', 96),
+		disciplines: alphabeticStringField('fr-FR', 96),
+		situationProfessionnelle: z.enum(situationProfessionnelleEnum),
+		titreThese: alphabeticStringField('fr-FR', 255),
+		etatAvancement: alphabeticStringField('fr-FR', 255)
 	})
 	.superRefine((val, ctx) => {
 		// verify if the user has filled all the fields of the co-director or none

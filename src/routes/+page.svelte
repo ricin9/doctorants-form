@@ -3,12 +3,18 @@
 	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
 	import { Alert, Button, Radio, Spinner } from 'flowbite-svelte';
 	import { searchSpecialty } from './referenceApiClient';
-	import { doctorateTypeOptions, genderOptions, gradesOptions } from '../lib/common/formEnums';
+	import {
+		doctorateTypeOptions,
+		genderOptions,
+		gradesOptions,
+		situationProfessionnelleOptions
+	} from '../lib/common/formEnums';
 	import TextField from '$lib/components/form/TextField.svelte';
 	import DateInput from '$lib/components/form/DateInput.svelte';
 	import RadioInput from '$lib/components/form/RadioInput.svelte';
 	import SelectSearch from '$lib/components/form/SelectSearch.svelte';
 	import SelectInput from '$lib/components/form/SelectInput.svelte';
+	import TextareaInput from '$lib/components/form/TextareaInput.svelte';
 
 	export let data;
 
@@ -30,6 +36,40 @@
 		<div class="flex gap-4">
 			<TextField {form} field="anneBac" label="Année du BAC" class="w-24" type="number" />
 			<TextField {form} field="matriculeBac" label="Matricule du BAC" class="w-28" type="number" />
+		</div>
+		<div class="flex gap-4">
+			<TextField {form} field="nom" label="Nom" class="w-56" />
+			<TextField {form} field="prenom" label="Prenom" class="w-56" />
+			<TextField {form} field="lieuNaissance" label="Lieu de naissance" class="w-56" />
+			<DateInput {form} field="dateNaissance" label="Date de naissance" class="w-56" type="date" />
+			<RadioInput {form} field="gender" label="Sexe" data={genderOptions} />
+		</div>
+		<div class="flex gap-4">
+			<TextField {form} field="nomAr" label="Nom arabe" class="w-56" />
+			<TextField {form} field="prenomAr" label="Prenom arabe" class="w-56" />
+			<TextField {form} field="lieuNaissanceAr" label="Lieu de naissance arabe" class="w-56" />
+		</div>
+	</div>
+
+	<div>
+		<h2 class="text-3xl my-4 text-primary-700">Information académique</h2>
+		<div class="flex gap-4">
+			<SelectSearch {form} field="domain" label="Domaine" width="w-56" search={searchSpecialty} />
+			<SelectSearch {form} field="filiere" label="Filière" width="w-56" search={searchSpecialty} />
+			<SelectSearch
+				{form}
+				field="speciality"
+				label="Specialité"
+				width="w-56"
+				search={searchSpecialty}
+			/>
+			<TextField {form} field="autre_speciality" label="Specialité (autre)" class="w-56" />
+		</div>
+	</div>
+
+	<div>
+		<h2 class="text-3xl my-4 text-primary-700">La thèse de doctorat</h2>
+		<div class="flex gap-4">
 			<TextField
 				{form}
 				field="anneePremiereInscription"
@@ -44,31 +84,6 @@
 				class="w-56"
 				type="number"
 			/>
-		</div>
-		<div class="flex gap-4">
-			<TextField {form} field="nom" label="Nom" class="w-56" />
-			<TextField {form} field="prenom" label="Prenom" class="w-56" />
-			<TextField {form} field="lieuNaissance" label="Lieu de naissance" class="w-56" />
-			<DateInput {form} field="dateNaissance" label="Date de naissance" class="w-56" type="date" />
-			<RadioInput {form} field="gender" label="Civilité" data={genderOptions} />
-		</div>
-		<div class="flex gap-4">
-			<TextField {form} field="nomAr" label="Nom arabe" class="w-56" />
-			<TextField {form} field="prenomAr" label="Prenom arabe" class="w-56" />
-			<TextField {form} field="lieuNaissanceAr" label="Lieu de naissance arabe" class="w-56" />
-		</div>
-		<div class="flex gap-4">
-			<SelectSearch {form} field="domain" label="Domaine" width="w-56" search={searchSpecialty} />
-			<SelectSearch {form} field="filiere" label="Filière" width="w-56" search={searchSpecialty} />
-			<SelectSearch
-				{form}
-				field="speciality"
-				label="Specialité"
-				width="w-56"
-				search={searchSpecialty}
-			/>
-			<TextField {form} field="autre_speciality" label="Specialité (autre)" class="w-56" />
-
 			<RadioInput
 				{form}
 				field="typeDoctorat"
@@ -76,7 +91,40 @@
 				data={doctorateTypeOptions}
 			/>
 		</div>
+		<div class="flex gap-4">
+			<TextField
+				{form}
+				field="laboratoiteRattachement"
+				label="Laboratoire de rattachement"
+				class="w-56"
+			/>
+			<TextField {form} field="disciplines" label="Disciplines" class="w-56" />
+			<SelectInput
+				{form}
+				data={situationProfessionnelleOptions}
+				field="situationProfessionnelle"
+				label="Situation professionnelle"
+				class="w-56"
+			/>
+		</div>
+		<div class="flex gap-4">
+			<TextareaInput
+				{form}
+				field="titreThese"
+				rows="4"
+				label="Titre de la thèse de doctorat"
+				class="w-[29rem]"
+			/>
+			<TextareaInput
+				{form}
+				field="etatAvancement"
+				rows="4"
+				label="Etat d'avancement"
+				class="w-[29rem]"
+			/>
+		</div>
 	</div>
+
 	<div>
 		<h2 class="text-3xl my-4 text-primary-700">Information du directeur de thèse</h2>
 		<div class="flex gap-4">
