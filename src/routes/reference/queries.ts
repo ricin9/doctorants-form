@@ -1,6 +1,7 @@
 import { db } from '$lib/server/db';
 import { speciality } from '$lib/server/db/schemas/reference';
-import { like } from 'drizzle-orm';
+import { eq, like } from 'drizzle-orm';
+import type { PgColumn, PgTableWithColumns, TableConfig } from 'drizzle-orm/pg-core';
 
 export async function searchSpecialty(query: string) {
 	return await db

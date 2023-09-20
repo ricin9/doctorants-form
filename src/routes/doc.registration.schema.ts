@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import validator from 'validator';
+import { grades } from './formEnums';
 
 function alphabeticStringField(lang: 'ar-DZ' | 'fr-FR' = 'fr-FR', max: number = 50) {
 	return z
@@ -13,6 +14,9 @@ function alphabeticStringField(lang: 'ar-DZ' | 'fr-FR' = 'fr-FR', max: number = 
 			}`
 		});
 }
+
+const gradesEnum = z.enum(grades);
+
 export const schema = z
 	.object({
 		anneBac: z.number().int().min(1960).max(2017),
@@ -33,11 +37,11 @@ export const schema = z
 		typeDoctorat: z.enum(['M', 'F']), // TODO
 		nomDirecteur: alphabeticStringField(),
 		prenomDirecteur: alphabeticStringField(),
-		gradeDirecteur: alphabeticStringField(), // TODO
+		gradeDirecteur: gradesEnum,
 		etablissementDirecteur: z.number().int().positive('vous devez sélectionner un choix'),
 		nomCoDirecteur: alphabeticStringField(),
 		prenomCoDirecteur: alphabeticStringField(),
-		gradeCoDirecteur: alphabeticStringField(), // TODO
+		gradeCoDirecteur: gradesEnum,
 		etablissementCoDirecteur: z.number().int().positive('vous devez sélectionner un choix'),
 		domain: z.number().int().positive('vous devez sélectionner un choix'),
 		speciality: z.number().int().positive('vous devez sélectionner un choix'),
