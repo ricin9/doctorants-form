@@ -1,12 +1,12 @@
 import { db } from '$lib/server/db';
-import { speciality } from '$lib/server/db/schemas/reference';
-import { eq, like } from 'drizzle-orm';
-import type { PgColumn, PgTableWithColumns, TableConfig } from 'drizzle-orm/pg-core';
+import { domain, speciality } from '$lib/server/db/schemas/reference';
+import { like } from 'drizzle-orm';
 
-export async function searchSpecialty(query: string) {
+type ReferenceTable = typeof speciality | typeof domain;
+export async function searchSpecialty(t: ReferenceTable, query: string) {
 	return await db
 		.select()
-		.from(speciality)
+		.from(t)
 		.where(like(speciality.name, `%${query.toLowerCase()}%`))
 		.limit(15);
 }
