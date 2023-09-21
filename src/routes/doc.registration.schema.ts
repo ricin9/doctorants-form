@@ -42,6 +42,8 @@ export const schema = z
 		lieuNaissanceAr: alphabeticStringField('ar-DZ', 100),
 		annePrevueSoutenance: z.number().int().min(2023).max(2050),
 		typeDoctorat: z.enum(doctorateTypeEnum),
+		// telephone starts with 05 or 06 or 07
+		telephone: z.string().regex(/^(05|06|07)[0-9]{8}$/),
 
 		// info directeur de these
 		nomDirecteur: alphabeticStringField(),
@@ -61,9 +63,10 @@ export const schema = z
 
 		// info academique reference
 		domain: z.number().int().positive('vous devez sélectionner un choix'),
-		speciality: z.number().int().positive('vous devez sélectionner un choix'),
 		filiere: z.number().int().positive('vous devez sélectionner un choix'),
-		autre_speciality: alphabeticStringField('fr-FR', 96).optional(),
+		speciality: alphabeticStringField('fr-FR', 96)
+			.or(alphabeticStringField('ar-DZ', 96))
+			.optional(),
 
 		//info doctorat
 		laboratoiteRattachement: alphabeticStringField('fr-FR', 96),
@@ -72,6 +75,7 @@ export const schema = z
 		titreThese: alphabeticStringField('fr-FR', 255),
 		etatAvancement: alphabeticStringField('fr-FR', 255)
 	})
+	.partial()
 	.superRefine((val, ctx) => {
 		// verify if the user has filled all the fields of the co-director or none
 		if (

@@ -1,7 +1,5 @@
 import { json } from '@sveltejs/kit';
 import { schema, type ReferenceParams } from './schema.js';
-import { searchSpecialty } from './queries.js';
-import { speciality } from '$lib/server/db/schemas/reference.js';
 
 export async function GET({ url }) {
 	let params: ReferenceParams;
@@ -14,5 +12,6 @@ export async function GET({ url }) {
 		return new Response(undefined, { status: 400 });
 	}
 
-	return json(await searchSpecialty(speciality, params.query));
+	// return json(await searchSpecialty(speciality, params.query));
+	return json([]);
 }

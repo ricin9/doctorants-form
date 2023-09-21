@@ -5,6 +5,8 @@
 	import { searchSpecialty } from './referenceApiClient';
 	import {
 		doctorateTypeOptions,
+		domainOptions,
+		filiereOptions,
 		genderOptions,
 		gradesOptions,
 		situationProfessionnelleOptions
@@ -36,6 +38,7 @@
 		<div class="flex gap-4">
 			<TextField {form} field="anneBac" label="Année du BAC" class="w-24" type="number" />
 			<TextField {form} field="matriculeBac" label="Matricule du BAC" class="w-28" type="number" />
+			<TextField {form} field="telephone" label="Telephone" class="w-56" />
 		</div>
 		<div class="flex gap-4">
 			<TextField {form} field="nom" label="Nom" class="w-56" />
@@ -54,16 +57,9 @@
 	<div>
 		<h2 class="text-3xl my-4 text-primary-700">Information académique</h2>
 		<div class="flex gap-4">
-			<SelectSearch {form} field="domain" label="Domaine" width="w-56" search={searchSpecialty} />
-			<SelectSearch {form} field="filiere" label="Filière" width="w-56" search={searchSpecialty} />
-			<SelectSearch
-				{form}
-				field="speciality"
-				label="Specialité"
-				width="w-56"
-				search={searchSpecialty}
-			/>
-			<TextField {form} field="autre_speciality" label="Specialité (autre)" class="w-56" />
+			<SelectInput {form} field="domain" label="Domaine" width="w-56" data={domainOptions} />
+			<SelectInput {form} field="filiere" label="Filière" width="w-56" data={filiereOptions} />
+			<TextField {form} field="speciality" label="Specialité" class="w-56" />
 		</div>
 	</div>
 

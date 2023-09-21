@@ -2,11 +2,11 @@ import { date, integer, pgTable, serial, varchar } from 'drizzle-orm/pg-core';
 import {
 	directorGradePgEnum,
 	doctorateTypePgEnum,
-	domain,
-	filiere,
+	domainPgEnum,
+	filierePgEnum,
 	genderPgEnum,
-	speciality,
-	university
+	situationProfessionnellePgEnum,
+	establishment
 } from './reference';
 import { user } from './user';
 
@@ -33,23 +33,24 @@ export const doctorantDetails = pgTable('doctorant_details', {
 	anneePremiereInscription: integer('annee_premiere_inscription'),
 	nom: varchar('first_name', { length: 255 }).notNull(),
 	prenom: varchar('last_name', { length: 255 }).notNull(),
-	nomAr: varchar('first_name_ar', { length: 255 }).notNull(),
-	prenomAr: varchar('last_name_ar', { length: 255 }).notNull(),
 	lieuNaissance: varchar('location_birth', { length: 255 }).notNull(),
-	lieuNaissanceAr: varchar('location_birth_ar', { length: 255 }).notNull(),
 	dateNaissance: varchar('date_birth', { length: 255 }).notNull(),
 	gender: genderPgEnum('gender').notNull(),
-	domain: serial('domain')
-		.references(() => domain.id)
-		.notNull(),
-	speciality: serial('specialty_id').references(() => speciality.id),
-	autre_speciality: varchar('speciality_autre', { length: 255 }),
-	filiere: serial('filiere_id')
-		.references(() => filiere.id)
-		.notNull(),
+	nomAr: varchar('first_name_ar', { length: 255 }).notNull(),
+	prenomAr: varchar('last_name_ar', { length: 255 }).notNull(),
+	lieuNaissanceAr: varchar('location_birth_ar', { length: 255 }).notNull(),
 	typeDoctorat: doctorateTypePgEnum('doctorate_type').notNull(),
-	yearFirstRegistration: integer('year_first_registration').notNull(),
-	annePrevueSoutenance: date('soutenance_expected_date').notNull()
+	annePrevueSoutenance: date('soutenance_expected_date').notNull(),
+	telephone: varchar('telephone', { length: 255 }).notNull(),
+	domain: domainPgEnum('domain').notNull(),
+	filiere: filierePgEnum('filiere').notNull(),
+	speciality: varchar('speciality', { length: 255 }).notNull(),
+
+	laboratoiteRattachement: varchar('laboratoite_rattachement', { length: 255 }).notNull(),
+	disciplines: varchar('disciplines', { length: 255 }).notNull(),
+	titreThese: varchar('titre_these', { length: 255 }).notNull(),
+	etatAvancement: varchar('etat_avancement', { length: 255 }).notNull(),
+	situationProfessionnelle: situationProfessionnellePgEnum('situation_professionnelle').notNull()
 });
 
 export const thesisDirectorDetails = pgTable('directeur_these', {
@@ -57,7 +58,7 @@ export const thesisDirectorDetails = pgTable('directeur_these', {
 	nom: varchar('first_name', { length: 255 }).notNull(),
 	prenom: varchar('last_name', { length: 255 }).notNull(),
 	etablissement: serial('establishment')
-		.references(() => university.id)
+		.references(() => establishment.id)
 		.notNull(),
 	grade: directorGradePgEnum('grade').notNull()
 });

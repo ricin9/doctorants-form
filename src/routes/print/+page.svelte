@@ -1,3 +1,11 @@
+<script>
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		window.print();
+	});
+</script>
+
 <page>
 	<div class="min-h-screen flex flex-col justify-between">
 		<main class="flex flex-col gap-4 flex-grow mx-12 mt-4">
