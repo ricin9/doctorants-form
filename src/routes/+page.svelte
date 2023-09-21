@@ -2,7 +2,7 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
 	import { Alert, Button, Radio, Spinner } from 'flowbite-svelte';
-	import { searchSpecialty } from './referenceApiClient';
+	import { searchEstablishment } from './searchEstablishment';
 	import {
 		doctorateTypeOptions,
 		domainOptions,
@@ -142,7 +142,7 @@
 				field="etablissementDirecteur"
 				label="Etablissement"
 				width="w-[29rem]"
-				search={searchSpecialty}
+				search={searchEstablishment}
 			/>
 		</div>
 	</div>
@@ -171,7 +171,7 @@
 				field="etablissementCoDirecteur"
 				label="Etablissement"
 				width="w-[29rem]"
-				search={searchSpecialty}
+				search={searchEstablishment}
 			/>
 		</div>
 	</div>

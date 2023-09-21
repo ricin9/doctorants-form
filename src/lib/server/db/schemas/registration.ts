@@ -6,8 +6,8 @@ import {
 	filierePgEnum,
 	genderPgEnum,
 	situationProfessionnellePgEnum,
-	establishment,
-	laboratoiteRattachementPgEnum
+	laboratoiteRattachementPgEnum,
+	establishmentPgEnum
 } from './reference';
 import { user } from './user';
 
@@ -58,8 +58,6 @@ export const thesisDirectorDetails = pgTable('directeur_these', {
 	id: serial('id').primaryKey(),
 	nom: varchar('first_name', { length: 255 }).notNull(),
 	prenom: varchar('last_name', { length: 255 }).notNull(),
-	etablissement: serial('establishment')
-		.references(() => establishment.id)
-		.notNull(),
+	etablissement: establishmentPgEnum('establishment').notNull(),
 	grade: directorGradePgEnum('grade').notNull()
 });

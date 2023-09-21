@@ -2,6 +2,7 @@ import { z } from 'zod';
 import validator from 'validator';
 import {
 	doctorateTypeEnum,
+	establishmentEnum,
 	genderEnum,
 	gradesEnum,
 	situationProfessionnelleEnum
@@ -49,17 +50,13 @@ export const schema = z
 		nomDirecteur: alphabeticStringField(),
 		prenomDirecteur: alphabeticStringField(),
 		gradeDirecteur: gradesZodEnum,
-		etablissementDirecteur: z.number().int().positive('vous devez sélectionner un choix'),
+		etablissementDirecteur: z.enum(establishmentEnum),
 
 		// info co-directeur de these
 		nomCoDirecteur: alphabeticStringField().optional(),
 		prenomCoDirecteur: alphabeticStringField().optional(),
 		gradeCoDirecteur: gradesZodEnum.optional(),
-		etablissementCoDirecteur: z
-			.number()
-			.int()
-			.positive('vous devez sélectionner un choix')
-			.optional(),
+		etablissementCoDirecteur: z.enum(establishmentEnum),
 
 		// info academique reference
 		domain: z.number().int().positive('vous devez sélectionner un choix'),

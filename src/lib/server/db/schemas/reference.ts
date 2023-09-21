@@ -1,13 +1,14 @@
 import {
 	doctorateTypeEnum,
 	domainEnum,
+	establishmentEnum,
 	filiereEnum,
 	genderEnum,
 	gradesEnum,
 	laboratoiteRattachementEnum,
 	situationProfessionnelleEnum
-} from '$lib/common/formEnums';
-import { pgEnum, pgTable, serial, varchar } from 'drizzle-orm/pg-core';
+} from '../../../common/formEnums';
+import { pgEnum } from 'drizzle-orm/pg-core';
 
 // Enums
 export const genderPgEnum = pgEnum('gender', genderEnum);
@@ -23,12 +24,4 @@ export const laboratoiteRattachementPgEnum = pgEnum(
 	'laboratoiteRattachement',
 	laboratoiteRattachementEnum
 );
-
-// Lookup Tables
-
-const lookupTableBase = {
-	id: serial('id').primaryKey(),
-	name: varchar('name', { length: 255 }).notNull()
-};
-export const establishment = pgTable('establishment', lookupTableBase);
-export type establishment = typeof establishment.$inferSelect;
+export const establishmentPgEnum = pgEnum('establishment', establishmentEnum);

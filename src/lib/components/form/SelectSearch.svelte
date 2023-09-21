@@ -16,27 +16,27 @@
 	export let form: SuperForm<ZodValidation<T>, unknown>;
 	export let field: FormPathLeaves<z.infer<T>>;
 	const { value: genericValue, errors, constraints } = formFieldProxy(form, field);
-	const value = genericValue as Writable<number | undefined>;
+	const value = genericValue as Writable<string | number | undefined>;
+
+	type OptionType = {
+		value: string | number;
+		label: string;
+	};
 
 	let query = '';
-	let results: any[] = [];
+	let results: OptionType[] = [];
 	export let label = 'Cherchez';
 	export let width: string;
-	export let search: (query: string) => Promise<
-		{
-			id: number;
-			name: string;
-		}[]
-	>;
+	export let search: (query: string) => Promise<OptionType[]>;
 	async function handleInput(event: any) {
 		query = event.target.value;
 		results = await search(query);
-		results.length > 0 ? ($value = results[0].id) : ($value = undefined);
+		results.length > 0 ? ($value = results[0].value) : ($value = undefined);
 	}
 
 	onMount(async () => {
 		results = await search('');
-		results.length > 0 ? ($value = results[0].id) : ($value = undefined);
+		results.length > 0 ? ($value = results[0].value) : ($value = undefined);
 	});
 </script>
 
@@ -54,7 +54,7 @@
 		<Select name={field} bind:value={$value} class={width}>
 			{#if results.length > 0}
 				{#each results as result}
-					<option value={result.id}>{result.name}</option>
+					<option value={result.value}>{result.label}</option>
 				{/each}
 			{/if}
 		</Select>
