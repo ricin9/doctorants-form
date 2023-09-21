@@ -2,7 +2,9 @@ import { z } from 'zod';
 import validator from 'validator';
 import {
 	doctorateTypeEnum,
+	domainEnum,
 	establishmentEnum,
+	filiereEnum,
 	genderEnum,
 	gradesEnum,
 	situationProfessionnelleEnum
@@ -59,8 +61,8 @@ export const schema = z
 		etablissementCoDirecteur: z.enum(establishmentEnum),
 
 		// info academique reference
-		domain: z.number().int().positive('vous devez sélectionner un choix'),
-		filiere: z.number().int().positive('vous devez sélectionner un choix'),
+		domain: z.enum(domainEnum),
+		filiere: z.enum(filiereEnum),
 		speciality: alphabeticStringField('fr-FR', 96)
 			.or(alphabeticStringField('ar-DZ', 96))
 			.optional(),
@@ -72,7 +74,6 @@ export const schema = z
 		titreThese: alphabeticStringField('fr-FR', 255).or(alphabeticStringField('ar-DZ', 255)),
 		etatAvancement: alphabeticStringField('fr-FR', 350).or(alphabeticStringField('ar-DZ', 350))
 	})
-	.partial()
 	.superRefine((val, ctx) => {
 		// verify if the user has filled all the fields of the co-director or none
 		if (
@@ -94,3 +95,5 @@ export const schema = z
 			}
 		}
 	});
+
+export type DoctorateRegistration = z.infer<typeof schema>;
