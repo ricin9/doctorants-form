@@ -4,6 +4,8 @@
 </script>
 
 <script lang="ts" generics="T extends AnyZodObject">
+	import { derived } from 'svelte/store';
+
 	import { Helper, Input, Label } from 'flowbite-svelte';
 
 	import type { z } from 'zod';
@@ -15,6 +17,8 @@
 	export let label: string = field;
 
 	const { value, errors, constraints } = formFieldProxy(form, field);
+	const transform = (v: string | number): string => new Date(v).toISOString().split('T')[0];
+	$: $value = transform($value as string) as any;
 </script>
 
 <div class="mb-6">
@@ -26,8 +30,8 @@
 		color={$errors ? 'red' : undefined}
 		bind:value={$value}
 		{...$constraints}
-		min={$constraints?.min && new Date($constraints.min).toISOString().split('T')[0]}
-		max={$constraints?.max && new Date($constraints.max).toISOString().split('T')[0]}
+		min={$constraints?.min && transform($constraints.min)}
+		max={$constraints?.max && transform($constraints.max)}
 		{...$$restProps}
 	/>
 	{#if $errors}

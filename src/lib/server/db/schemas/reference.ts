@@ -1,11 +1,7 @@
 import {
 	doctorateTypeEnum,
-	domainEnum,
-	establishmentEnum,
-	filiereEnum,
 	genderEnum,
 	gradesEnum,
-	laboratoiteRattachementEnum,
 	situationProfessionnelleEnum
 } from '../../../common/formEnums';
 import { pgEnum } from 'drizzle-orm/pg-core';
@@ -18,10 +14,12 @@ export const situationProfessionnellePgEnum = pgEnum(
 	'situationProfessionnelle',
 	situationProfessionnelleEnum
 );
-export const domainPgEnum = pgEnum('domain', domainEnum);
-export const filierePgEnum = pgEnum('filiere', filiereEnum);
-export const laboratoiteRattachementPgEnum = pgEnum(
-	'laboratoiteRattachement',
-	laboratoiteRattachementEnum
-);
-export const establishmentPgEnum = pgEnum('establishment', establishmentEnum);
+
+// NOTE : these are causing problems because of the single quotes also ENUMs in postgres are max 64 characters
+// export const laboratoiteRattachementPgEnum = pgEnum(
+// 	'laboratoiteRattachement',
+// 	laboratoiteRattachementEnum
+// );
+// export const domainPgEnum = pgEnum('domain', domainEnum);
+// export const filierePgEnum = pgEnum('filiere', filiereEnum);
+// export const establishmentPgEnum = pgEnum('establishment', establishmentEnum);

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms/client';
-	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
+	// import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
 	import { Alert, Button, Radio, Spinner } from 'flowbite-svelte';
 	import { searchEstablishment } from './searchEstablishment';
 	import {
@@ -184,4 +184,4 @@
 	</Button>
 </form>
 
-<SuperDebug data={form.form} />
+<!-- <SuperDebug data={form.form} /> -->

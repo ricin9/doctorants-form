@@ -1,10 +1,24 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
-	// onMount(() => {
-	// 	window.print();
-	// });
+
+	export let data;
+	onMount(() => {
+		window.print();
+	});
+	const { doctorant_details: details, directeur_these: director, coDirector } = data.registration;
 	const whiteSquare = '□';
 	const filledSquare = '▣';
+	function getDoctorateTypeSquare(type: typeof details.typeDoctorat) {
+		return type === details.typeDoctorat ? filledSquare : whiteSquare;
+	}
+
+	function formatDateString(date: string) {
+		return new Date(date).toLocaleDateString('fr-FR', {
+			year: 'numeric',
+			month: '2-digit',
+			day: '2-digit'
+		});
+	}
 </script>
 
 <page>
@@ -13,11 +27,14 @@
 		<main class="flex flex-col gap-3 flex-grow mx-4 mt-4">
 			<div class="flex flex-col justify-center content-center">
 				<div class="mx-auto leading-none">
-					<span class="font-medium mr-2">Diplome Preparé:</span> Doctorat en Sciences ▢ Doctorat LMD
-					▢
+					<span class="font-medium mr-2">Diplome Preparé:</span> Doctorat en Sciences {getDoctorateTypeSquare(
+						'classique'
+					)} Doctorat LMD
+					{getDoctorateTypeSquare('lmd')}
 				</div>
 				<div class="mx-auto">
-					<span class="font-medium mr-2">Discplines:</span> Lorem ipsum dolor sit amet.
+					<span class="font-medium mr-2">Discplines:</span>
+					{details.disciplines}
 				</div>
 				<div class="mx-auto">
 					<span class="font-medium mr-24">(Arrété n° :</span><span class="mr-48 font-medium"
@@ -33,53 +50,63 @@
 			<div class="flex flex-col">
 				<h4 class="text-lg font-medium">L'étudiant(e):</h4>
 				<div class="flex">
-					<div class="flex-1"><span class="font-medium mr-2">Nom:</span> Miloudi</div>
-					<div class="flex-1"><span class="font-medium mr-2">Prenom:</span> Mohamed</div>
+					<div class="flex-1"><span class="font-medium mr-2">Nom:</span> {details.nom}</div>
+					<div class="flex-1"><span class="font-medium mr-2">Prenom:</span> {details.prenom}</div>
 				</div>
 				<div>
-					<span class="font-medium mr-2">Date et Lieu de Naissance:</span> 2002-03-19, Mascara
+					<span class="font-medium mr-2">Date et Lieu de Naissance:</span>
+					{formatDateString(details.dateNaissance)},<span class="font-medium mx-2">à</span>
+					{details.lieuNaissance}
 				</div>
 				<div>
-					<span class="font-medium mr-2">Date de 1er Inscription:</span> 2015
+					<span class="font-medium mr-2">Date de 1er Inscription:</span>
+					{details.anneePremiereInscription}
 				</div>
 			</div>
 
 			<div class="flex flex-col">
 				<h4 class="text-lg font-medium">L'encadreur:</h4>
 				<div class="flex">
-					<div class="flex-1"><span class="font-medium mr-2">Nom:</span> Miloudi</div>
-					<div class="flex-1"><span class="font-medium mr-2">Prenom:</span> Mohamed</div>
-					<div class="flex-1"><span class="font-medium mr-2">Grade:</span> Professeur</div>
+					<div class="flex-1"><span class="font-medium mr-2">Nom:</span> {director.nom}</div>
+					<div class="flex-1"><span class="font-medium mr-2">Prenom:</span> {director.prenom}</div>
+					<div class="flex-1"><span class="font-medium mr-2">Grade:</span> {director.grade}</div>
 				</div>
 				<div class="flex">
-					<span class="font-medium mr-2">Etablissement:</span> Université Mascara
+					<span class="font-medium mr-2">Etablissement:</span>
+					{director.etablissement}
 				</div>
 			</div>
 
 			<div class="flex flex-col">
 				<h4 class="text-lg font-medium">Le Co-Encadreur:</h4>
 				<div class="flex">
-					<div class="flex-1"><span class="font-medium mr-2">Nom:</span> Miloudi</div>
-					<div class="flex-1"><span class="font-medium mr-2">Prenom:</span> Mohamed</div>
-					<div class="flex-1"><span class="font-medium mr-2">Grade:</span> Professeur</div>
+					<div class="flex-1">
+						<span class="font-medium mr-2">Nom:</span>
+						{coDirector && coDirector.nom}
+					</div>
+					<div class="flex-1">
+						<span class="font-medium mr-2">Prenom:</span>
+						{coDirector && coDirector.prenom}
+					</div>
+					<div class="flex-1">
+						<span class="font-medium mr-2">Grade:</span>
+						{coDirector && coDirector.grade}
+					</div>
 				</div>
 				<div>
-					<span class="font-medium mr-2">Etablissement:</span> Université Mascara
+					<span class="font-medium mr-2">Etablissement:</span>
+					{coDirector && coDirector.etablissement}
 				</div>
 			</div>
 
 			<div class="h-[4.5rem] max-h-[6rem]">
-				<span class="font-medium mr-2">Titre de la thèse de Doctorat:</span> وينتقل العرش من طبقة إلى
-				أخرى؛ أي منه إلى أكبر أبنائه سنًّا وهكذا. ويذكر أنه في حالة وفاة ولي العهد في حياة الملك فإن
-				ولاية العهد تنتقل لأكبر أبناء ولي العهد سنًّا حتى وإن كان له أخوة، يُذكر كذلك أن الدستور ينص
-				على جواز اختيار الملك بنفسه وليًّا لعهده ولكنه يحصر ذلك ابتداءً في إخوة الملك فقط، لكن
+				<span class="font-medium mr-2">Titre de la thèse de Doctorat:</span>
+				{details.titreThese}
 			</div>
 
-			<div class="h-[4.5rem] max-h-[6rem]">
-				<span class="font-medium mr-2">Etat d'avancement:</span> Lorem ipsum dolor sit amet consectetur
-				adipisicing elit. Fugit maxime assumenda corrupti, minus iusto nisi molestiae repellat, aliquid
-				vitae dicta perspiciatis odio iste temporibus soluta. Lorem ipsum dolor sit amet consectetur
-				adipisicing elit. Eveniet illum eaque ipsum.
+			<div class="min-h-[4.5rem] max-h-[6rem]">
+				<span class="font-medium mr-2">Etat d'avancement:</span>
+				{details.etatAvancement}
 			</div>
 
 			<div class="mx-auto">
