@@ -80,6 +80,28 @@ export const filiereEnum = [
 	'Langue et Littérature Arabes'
 ] as const;
 
+export const laboratoiteRattachementEnum = [
+	'Laboratoire Management des Collectivités Locales et Développement Local',
+	"Laboratoire d'Analyse, de Prospective et de Développement des Emplois et des Compétences",
+	'Laboratoire de PME, Recherche et Innovation',
+	'Laboratoire de Chimie Organique, Macromoléculaire et des Matériaux',
+	'Laboratoire des Matériaux, Applications et Environnement',
+	'Laboratoire de physique quantique de la matière et modélisation mathématique',
+	"Laboratoire des sciences et techniques de l'eau",
+	'Laboratoire de Génie des Procédés et Chimie des Solutions',
+	'Laboratoire de Recherche sur les Systèmes Biologiques et la Géomatique',
+	'Laboratoire Géo Environnement et Développement des Espaces',
+	'Chimie Physique des Macromolécules et Interfaces Biologiques',
+	'Laboratoire de Bioconversion, Génie Microbiologique et Sécurité Sanitaire',
+	'Méthodologie de la critique moderne et analyse du discours',
+	"Laboratoire de l'ingénierie des programmes de langue dans les filières de spécialité",
+	'Laboratoire des Recherches Sociologiques et Historiques',
+	'Laboratoire Législations des Droits Economiques',
+	'Les outils juridiques de la politique foncière',
+	'Laboratoire de Géomatique, Ecologie et Environnement',
+	'Laboratoire de Linguistique Arabe et Analyse des Textes',
+	"Laboratoire d'analyse des systèmes"
+] as const;
 // options for select/radio inputs
 // sort array before mapping
 
@@ -92,3 +114,4 @@ export const doctorateTypeOptions = enumToOption(doctorateTypeEnum);
 export const situationProfessionnelleOptions = enumToOption(situationProfessionnelleEnum);
 export const domainOptions = enumToOption(domainEnum);
 export const filiereOptions = enumToOption(filiereEnum);
+export const laboratoiteRattachementOptions = enumToOption(laboratoiteRattachementEnum);

@@ -4,6 +4,7 @@ import {
 	filiereEnum,
 	genderEnum,
 	gradesEnum,
+	laboratoiteRattachementEnum,
 	situationProfessionnelleEnum
 } from '$lib/common/formEnums';
 import { pgEnum, pgTable, serial, varchar } from 'drizzle-orm/pg-core';
@@ -18,6 +19,10 @@ export const situationProfessionnellePgEnum = pgEnum(
 );
 export const domainPgEnum = pgEnum('domain', domainEnum);
 export const filierePgEnum = pgEnum('filiere', filiereEnum);
+export const laboratoiteRattachementPgEnum = pgEnum(
+	'laboratoiteRattachement',
+	laboratoiteRattachementEnum
+);
 
 // Lookup Tables
 

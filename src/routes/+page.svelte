@@ -9,6 +9,7 @@
 		filiereOptions,
 		genderOptions,
 		gradesOptions,
+		laboratoiteRattachementOptions,
 		situationProfessionnelleOptions
 	} from '../lib/common/formEnums';
 	import TextField from '$lib/components/form/TextField.svelte';
@@ -88,13 +89,13 @@
 			/>
 		</div>
 		<div class="flex gap-4">
-			<TextField
+			<SelectInput
 				{form}
 				field="laboratoiteRattachement"
 				label="Laboratoire de rattachement"
 				class="w-56"
+				data={laboratoiteRattachementOptions}
 			/>
-			<TextField {form} field="disciplines" label="Disciplines" class="w-56" />
 			<SelectInput
 				{form}
 				data={situationProfessionnelleOptions}
@@ -102,6 +103,7 @@
 				label="Situation professionnelle"
 				class="w-56"
 			/>
+			<TextField {form} field="disciplines" label="Disciplines" class="w-56" />
 		</div>
 		<div class="flex gap-4">
 			<TextareaInput

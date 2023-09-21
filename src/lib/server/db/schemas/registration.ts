@@ -6,7 +6,8 @@ import {
 	filierePgEnum,
 	genderPgEnum,
 	situationProfessionnellePgEnum,
-	establishment
+	establishment,
+	laboratoiteRattachementPgEnum
 } from './reference';
 import { user } from './user';
 
@@ -46,10 +47,10 @@ export const doctorantDetails = pgTable('doctorant_details', {
 	filiere: filierePgEnum('filiere').notNull(),
 	speciality: varchar('speciality', { length: 255 }).notNull(),
 
-	laboratoiteRattachement: varchar('laboratoite_rattachement', { length: 255 }).notNull(),
+	laboratoiteRattachement: laboratoiteRattachementPgEnum('laboratoite_rattachement').notNull(),
 	disciplines: varchar('disciplines', { length: 255 }).notNull(),
-	titreThese: varchar('titre_these', { length: 255 }).notNull(),
-	etatAvancement: varchar('etat_avancement', { length: 255 }).notNull(),
+	titreThese: varchar('titre_these', { length: 512 }).notNull(),
+	etatAvancement: varchar('etat_avancement', { length: 512 }).notNull(),
 	situationProfessionnelle: situationProfessionnellePgEnum('situation_professionnelle').notNull()
 });
 

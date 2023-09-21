@@ -72,8 +72,8 @@ export const schema = z
 		laboratoiteRattachement: alphabeticStringField('fr-FR', 96),
 		disciplines: alphabeticStringField('fr-FR', 96),
 		situationProfessionnelle: z.enum(situationProfessionnelleEnum),
-		titreThese: alphabeticStringField('fr-FR', 255),
-		etatAvancement: alphabeticStringField('fr-FR', 255)
+		titreThese: alphabeticStringField('fr-FR', 255).or(alphabeticStringField('ar-DZ', 255)),
+		etatAvancement: alphabeticStringField('fr-FR', 350).or(alphabeticStringField('ar-DZ', 350))
 	})
 	.partial()
 	.superRefine((val, ctx) => {
