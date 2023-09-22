@@ -22,7 +22,8 @@ export const doctorateRegistration = pgTable('doctorate_registration', {
 	thesisCoDirectorDetails: serial('thesis_co_director_details').references(
 		() => thesisDirectorDetails.id,
 		{ onDelete: 'cascade' }
-	)
+	),
+	createdAt: date('created_at').defaultNow().notNull()
 });
 
 // export const doctorateRegistrationRelations = relations(doctorateRegistration, ({ one }) => ({
