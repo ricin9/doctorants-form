@@ -8,10 +8,10 @@ import {
 import { user } from './user';
 
 export const doctorateRegistration = pgTable('doctorate_registration', {
-	id: serial('id').primaryKey(),
-	user: serial('user')
-		.references(() => user.id)
-		.notNull(),
+	id: integer('id')
+		.primaryKey()
+		.references(() => user.id, { onDelete: 'cascade' }),
+
 	doctorantDetails: serial('doctorant_details')
 		.references(() => doctorantDetails.id, { onDelete: 'cascade' })
 		.notNull(),
@@ -23,30 +23,15 @@ export const doctorateRegistration = pgTable('doctorate_registration', {
 		() => thesisDirectorDetails.id,
 		{ onDelete: 'cascade' }
 	),
+
+	file: varchar('file', { length: 255 }),
 	createdAt: date('created_at').defaultNow().notNull()
 });
 
-// export const doctorateRegistrationRelations = relations(doctorateRegistration, ({ one }) => ({
-// 	userInfo: one(user, {
-// 		fields: [doctorateRegistration.user],
-// 		references: [user.id]
-// 	}),
-// 	details: one(doctorantDetails, {
-// 		fields: [doctorateRegistration.doctorantDetails],
-// 		references: [doctorantDetails.id]
-// 	}),
-// 	director: one(thesisDirectorDetails, {
-// 		fields: [doctorateRegistration.thesisDirectorDetails],
-// 		references: [thesisDirectorDetails.id]
-// 	}),
-// 	coDirector: one(thesisDirectorDetails, {
-// 		fields: [doctorateRegistration.thesisCoDirectorDetails],
-// 		references: [thesisDirectorDetails.id]
-// 	})
-// }));
-
 export const doctorantDetails = pgTable('doctorant_details', {
-	id: serial('id').primaryKey(),
+	id: integer('id')
+		.primaryKey()
+		.references(() => user.id, { onDelete: 'cascade' }),
 	anneBac: integer('anne_bac').notNull(),
 	matriculeBac: integer('matricule_bac').notNull(),
 	anneePremiereInscription: integer('annee_premiere_inscription'),

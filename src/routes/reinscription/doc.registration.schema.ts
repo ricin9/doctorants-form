@@ -8,7 +8,7 @@ import {
 	gradesEnum,
 	laboratoiteRattachementEnum,
 	situationProfessionnelleEnum
-} from '../lib/common/enums';
+} from '$lib/common/enums';
 import { alphabeticStringField } from '$lib/common/validation/alphabeticValidation';
 
 export const schema = z
@@ -41,10 +41,10 @@ export const schema = z
 		etablissementDirecteur: z.enum(establishmentEnum),
 
 		// info co-directeur de these
-		nomCoDirecteur: alphabeticStringField().optional(),
-		prenomCoDirecteur: alphabeticStringField().optional(),
-		gradeCoDirecteur: z.enum(gradesEnum).optional(),
-		etablissementCoDirecteur: z.enum(establishmentEnum).optional(),
+		nomCoDirecteur: alphabeticStringField().optional().nullable(),
+		prenomCoDirecteur: alphabeticStringField().optional().nullable(),
+		gradeCoDirecteur: z.enum(gradesEnum).optional().nullable(),
+		etablissementCoDirecteur: z.enum(establishmentEnum).optional().nullable(),
 
 		// info academique reference
 		domain: z.enum(domainEnum),

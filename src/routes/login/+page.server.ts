@@ -44,7 +44,10 @@ export const actions = {
 		}
 
 		// success
-		cookies.set('sid', await createSession(queryResult[0].id.toString()));
+		cookies.set(
+			'sid',
+			await createSession({ uid: queryResult[0].id.toString(), role: queryResult[0].role })
+		);
 		throw redirect(303, '/');
 	}
 };

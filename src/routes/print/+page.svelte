@@ -82,20 +82,20 @@
 				<div class="flex">
 					<div class="flex-1">
 						<span class="font-medium mr-2">Nom:</span>
-						{coDirector && coDirector.nom}
+						{coDirector ? coDirector.nom : '(aucun)'}
 					</div>
 					<div class="flex-1">
 						<span class="font-medium mr-2">Prenom:</span>
-						{coDirector && coDirector.prenom}
+						{coDirector ? coDirector.prenom : '(aucun)'}
 					</div>
 					<div class="flex-1">
 						<span class="font-medium mr-2">Grade:</span>
-						{coDirector && coDirector.grade}
+						{coDirector ? coDirector.grade : '(aucun)'}
 					</div>
 				</div>
 				<div>
 					<span class="font-medium mr-2">Etablissement:</span>
-					{coDirector && coDirector.etablissement}
+					{coDirector ? coDirector.etablissement : '(aucun)'}
 				</div>
 			</div>
 

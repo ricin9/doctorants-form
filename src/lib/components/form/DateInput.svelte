@@ -17,7 +17,8 @@
 	export let label: string = field;
 
 	const { value, errors, constraints } = formFieldProxy(form, field);
-	const transform = (v: string | number): string => new Date(v).toISOString().split('T')[0];
+	const transform = (v: string | number | null): string | undefined =>
+		v ? new Date(v).toISOString().split('T')[0] : undefined;
 	$: $value = transform($value as string) as any;
 </script>
 

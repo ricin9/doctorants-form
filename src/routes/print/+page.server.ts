@@ -17,7 +17,7 @@ export async function load({ locals }) {
 	const data = await db
 		.select()
 		.from(registration)
-		.where(eq(registration.user, +locals.session.uid))
+		.where(eq(registration.id, +locals.session.uid))
 		.innerJoin(details, eq(registration.doctorantDetails, details.id))
 		.innerJoin(director, eq(registration.thesisDirectorDetails, director.id))
 		.leftJoin(coDirector, eq(registration.thesisCoDirectorDetails, director.id))
