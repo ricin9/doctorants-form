@@ -59,7 +59,7 @@ export const doctorantDetails = pgTable('doctorant_details', {
 	prenomAr: varchar('last_name_ar', { length: 255 }).notNull(),
 	lieuNaissanceAr: varchar('location_birth_ar', { length: 255 }).notNull(),
 	typeDoctorat: doctorateTypePgEnum('doctorate_type').notNull(),
-	annePrevueSoutenance: date('soutenance_expected_date').notNull(),
+	annePrevueSoutenance: integer('soutenance_expected_date').notNull(),
 	telephone: varchar('telephone', { length: 255 }).notNull(),
 	domain: varchar('domain', { length: 255 }).notNull(),
 	filiere: varchar('filiere', { length: 255 }).notNull(),

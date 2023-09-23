@@ -6,7 +6,7 @@ import {
 	thesisDirectorDetails as director
 } from '$lib/server/db/schemas/registration.js';
 import { user } from '$lib/server/db/schemas/user';
-import { desc, eq } from 'drizzle-orm';
+import { desc, eq, sql } from 'drizzle-orm';
 
 const coDirector = alias(director, 'coDirector');
 
@@ -29,9 +29,9 @@ const selectedValues = {
 	'annee de premiere inscription': regDetails.anneePremiereInscription,
 	'annee prevue de soutenance': regDetails.annePrevueSoutenance,
 	'type de doctorat': regDetails.typeDoctorat,
-	'laboratore de rattachement': regDetails.laboratoiteRattachement,
+	'laboratoire de rattachement': regDetails.laboratoiteRattachement,
 	'situation professionnelle': regDetails.situationProfessionnelle,
-	discplines: regDetails.disciplines,
+	disciplines: regDetails.disciplines,
 	'titre de thèse': regDetails.titreThese,
 	'etat avancement': regDetails.etatAvancement,
 	'nom directeur': director.nom,
@@ -52,4 +52,15 @@ export const getAllRegistrations = db
 	.innerJoin(director, eq(reg.thesisDirectorDetails, director.id))
 	.leftJoin(coDirector, eq(reg.thesisCoDirectorDetails, director.id))
 	.orderBy(desc(reg.createdAt))
+	.prepare('getAllRegistrations');
+
+export const getRegistrationById = db
+	.select(selectedValues)
+	.from(reg)
+	.where(eq(reg.id, sql.placeholder('id')))
+	.innerJoin(regDetails, eq(reg.doctorantDetails, regDetails.id))
+	.innerJoin(user, eq(reg.user, user.id))
+	.innerJoin(director, eq(reg.thesisDirectorDetails, director.id))
+	.leftJoin(coDirector, eq(reg.thesisCoDirectorDetails, director.id))
+	.limit(1)
 	.prepare('getAllRegistrations');
