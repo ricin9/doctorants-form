@@ -11,7 +11,7 @@
 		gradesOptions,
 		laboratoiteRattachementOptions,
 		situationProfessionnelleOptions
-	} from '../lib/common/formEnums';
+	} from '../lib/common/enums';
 	import TextField from '$lib/components/form/TextField.svelte';
 	import DateInput from '$lib/components/form/DateInput.svelte';
 	import RadioInput from '$lib/components/form/RadioInput.svelte';

@@ -11,13 +11,13 @@ import { alias } from 'drizzle-orm/pg-core';
 const coDirector = alias(director, 'coDirector');
 
 export async function load({ locals }) {
-	if (!locals.uid) {
+	if (!locals.session) {
 		throw redirect(307, '/login');
 	}
 	const data = await db
 		.select()
 		.from(registration)
-		.where(eq(registration.user, +locals.uid))
+		.where(eq(registration.user, +locals.session.uid))
 		.innerJoin(details, eq(registration.doctorantDetails, details.id))
 		.innerJoin(director, eq(registration.thesisDirectorDetails, director.id))
 		.leftJoin(coDirector, eq(registration.thesisCoDirectorDetails, director.id))

@@ -2,11 +2,13 @@ import {
 	doctorateTypeEnum,
 	genderEnum,
 	gradesEnum,
+	roleEnum,
 	situationProfessionnelleEnum
-} from '../../../common/formEnums';
+} from '../../../common/enums';
 import { pgEnum } from 'drizzle-orm/pg-core';
 
 // Enums
+export const rolePgEnum = pgEnum('role', roleEnum);
 export const genderPgEnum = pgEnum('gender', genderEnum);
 export const doctorateTypePgEnum = pgEnum('doctorateType', doctorateTypeEnum);
 export const directorGradePgEnum = pgEnum('directorGrade', gradesEnum);

@@ -1,4 +1,4 @@
-import { establishmentOptions } from '$lib/common/formEnums';
+import { establishmentOptions } from '$lib/common/enums';
 
 export async function searchEstablishment(query: string) {
 	const establishments = establishmentOptions;

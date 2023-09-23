@@ -2,7 +2,7 @@
 // import { getRegistrations } from './getRegistrations';
 
 // export async function load({ locals }) {
-// 	if (!locals.uid) {
+// 	if (!locals.session) {
 // 		throw redirect(303, '/login');
 // 	}
 

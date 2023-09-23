@@ -5,7 +5,7 @@ import { createDoctorateRegistration } from './registration.query';
 import { defaultFormValues } from './defaultFormValues';
 
 export const load = async ({ locals }) => {
-	if (!locals.uid) {
+	if (!locals.session) {
 		throw redirect(307, '/login');
 	}
 	// Server API:
@@ -17,7 +17,7 @@ export const load = async ({ locals }) => {
 
 export const actions = {
 	default: async ({ request, locals }) => {
-		if (!locals.uid) {
+		if (!locals.session) {
 			throw redirect(303, '/login');
 		}
 		const form = await superValidate(request, schema);
@@ -28,7 +28,7 @@ export const actions = {
 		}
 
 		try {
-			await createDoctorateRegistration(locals.uid, form.data);
+			await createDoctorateRegistration(locals.session.uid, form.data);
 		} catch (err) {
 			return fail(500, { form });
 		}

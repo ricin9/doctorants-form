@@ -1,10 +1,7 @@
-import { json, redirect } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
 import { getRegistrations } from './getRegistrations.js';
 
-export async function GET({ locals, url }) {
-	if (!locals.uid) {
-		throw redirect(303, '/login');
-	}
+export async function GET({ url }) {
 	const query: string = url.searchParams.get('q') || '';
 
 	const registrations = await getRegistrations(query);

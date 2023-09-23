@@ -1,3 +1,5 @@
+export const roleEnum = ['user', 'admin'] as const;
+
 export const genderEnum = ['homme', 'femme'] as const;
 
 export const doctorateTypeEnum = ['classique', 'lmd'] as const;

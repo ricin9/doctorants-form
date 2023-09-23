@@ -8,7 +8,7 @@ import {
 	gradesEnum,
 	laboratoiteRattachementEnum,
 	situationProfessionnelleEnum
-} from '../lib/common/formEnums';
+} from '../lib/common/enums';
 import { alphabeticStringField } from '$lib/common/validation/alphabeticValidation';
 
 export const schema = z
