@@ -225,7 +225,7 @@ export const establishmentEnum = [
 // options object layout for select/radio inputs
 
 function enumToOption(arr: readonly string[]) {
-	return arr.toSorted().map((val) => ({ value: val, label: val }));
+	return [...arr].sort().map((val) => ({ value: val, label: val }));
 }
 export const genderOptions = enumToOption(genderEnum);
 export const gradesOptions = enumToOption(gradesEnum);
