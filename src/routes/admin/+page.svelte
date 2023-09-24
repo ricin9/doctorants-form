@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {
+		Button,
 		Table,
 		TableBody,
 		TableBodyCell,
@@ -9,6 +10,8 @@
 		TableSearch
 	} from 'flowbite-svelte';
 	import debounce from 'lodash.debounce';
+
+	export let data;
 
 	let searchInput = '';
 	let debouncedSearchInput = '';
@@ -22,7 +25,6 @@
 
 	const handleInput = debounce(
 		(input: string) => {
-			console.log(input);
 			debouncedSearchInput = input;
 		},
 		350,
@@ -31,38 +33,79 @@
 	$: handleInput(searchInput);
 </script>
 
-<TableSearch
-	placeholder="Search by maker name"
-	hoverable={true}
-	bind:inputValue={searchInput}
-	striped
->
-	<TableHead>
-		<TableHeadCell>Nom</TableHeadCell>
-		<TableHeadCell>Prenom</TableHeadCell>
-		<TableHeadCell>Email</TableHeadCell>
-		<TableHeadCell>Telephone</TableHeadCell>
-		<TableHeadCell>Lieu de naissance</TableHeadCell>
-		<TableHeadCell>Date de naissance</TableHeadCell>
-	</TableHead>
-	<TableBody tableBodyClass="divide-y">
-		{#await fetchRegistrations(debouncedSearchInput) then items}
-			{#each [...items, ...items] as item}
-				<TableBodyRow>
-					<TableBodyCell class="capitalize">{item.nom}</TableBodyCell>
-					<TableBodyCell class="capitalize">{item.prenom}</TableBodyCell>
-					<TableBodyCell class="lowercase">{item.email}</TableBodyCell>
-					<TableBodyCell>{item.telephone}</TableBodyCell>
-					<TableBodyCell class="capitalize"
-						>{new Date(item.dateNaissance).toLocaleDateString('fr-FR', {
-							year: 'numeric',
-							month: 'long',
-							day: '2-digit'
-						})}</TableBodyCell
-					>
-					<TableBodyCell>{item.lieuNaissance}</TableBodyCell>
-				</TableBodyRow>
-			{/each}
-		{/await}
-	</TableBody>
-</TableSearch>
+<main class="flex flex-col m-4 gap-4">
+	<div>
+		<span class="font-medium">Nombre de réinscriptions:</span>
+		{data.registrationsCount}
+		<Button size="xs" href="/admin/export" download>Exporter tous les données</Button>
+	</div>
+
+	<TableSearch
+		placeholder="Cherchez par nom et prenom"
+		hoverable
+		bind:inputValue={searchInput}
+		striped
+	>
+		<TableHead>
+			<TableHeadCell>Nom</TableHeadCell>
+			<TableHeadCell>Prenom</TableHeadCell>
+			<TableHeadCell>Email</TableHeadCell>
+			<TableHeadCell>Telephone</TableHeadCell>
+			<TableHeadCell>Lieu de naissance</TableHeadCell>
+			<TableHeadCell>Date de naissance</TableHeadCell>
+			<TableHeadCell class="max-w-[8rem]">A uploadé la réinscription final?</TableHeadCell>
+			<TableHeadCell class="max-w-[6rem]">Plus de détail</TableHeadCell>
+			<TableHeadCell class="max-w-[6rem]">Date creation</TableHeadCell>
+		</TableHead>
+		<TableBody tableBodyClass="divide-y">
+			{#await fetchRegistrations(debouncedSearchInput) then items}
+				{#each items as item}
+					<TableBodyRow>
+						<TableBodyCell class="capitalize whitespace-break-spaces">{item.nom}</TableBodyCell>
+						<TableBodyCell class="capitalize whitespace-break-spaces">{item.prenom}</TableBodyCell>
+						<TableBodyCell class="lowercase">{item.email}</TableBodyCell>
+						<TableBodyCell>{item.telephone}</TableBodyCell>
+						<TableBodyCell class="whitespace-break-spaces">{item.lieuNaissance}</TableBodyCell>
+						<TableBodyCell class="capitalize"
+							>{new Date(item.dateNaissance).toLocaleDateString('fr-FR', {
+								year: 'numeric',
+								month: 'long',
+								day: '2-digit'
+							})}</TableBodyCell
+						>
+						<TableBodyCell>
+							{#if item.file}
+								<a
+									href={'/admin/file/' + item.id}
+									target="_blank"
+									class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+									>Document</a
+								>
+							{:else}
+								Non
+							{/if}
+						</TableBodyCell>
+						<TableBodyCell>
+							<a
+								href={'/admin/' + item.id}
+								target="_blank"
+								class="font-medium text-primary-600 hover:underline dark:text-primary-500">Voir</a
+							>
+						</TableBodyCell>
+						<TableBodyCell>
+							{new Date(item.createdAt).toLocaleDateString('fr-FR', {
+								year: 'numeric',
+								month: '2-digit',
+								day: '2-digit'
+							})}
+						</TableBodyCell>
+					</TableBodyRow>
+				{/each}
+			{/await}
+		</TableBody>
+	</TableSearch>
+	<div>
+		Max de resultats est : 25, vous pouvez utilisez la bar de recherche pour accéder plus
+		d'informations ou bien exporter les données
+	</div>
+</main>

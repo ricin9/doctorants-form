@@ -27,6 +27,5 @@ export async function load({ locals }) {
 		throw redirect(307, '/');
 	}
 
-	console.log(data);
 	return { registration: data };
 }

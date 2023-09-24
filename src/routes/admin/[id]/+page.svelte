@@ -1,12 +1,15 @@
 <script lang="ts">
+	import { Button } from 'flowbite-svelte';
+
 	export let data;
 	const { registration } = data;
 
 	const lineClass = 'w-56';
 </script>
 
+<Button href="/admin" class="ml-6 mt-4">Retour</Button>
 <div
-	class="flex max-w-7xl flex-col gap-12 mx-auto mt-12 ring-primary-500 ring-1 rounded px-8 pt-6 pb-8 mb-4 divide-y divide-solid divide-primary-500"
+	class="flex max-w-7xl flex-col gap-12 mx-auto mt-4 ring-primary-500 ring-1 rounded px-8 pt-6 pb-8 mb-4 divide-y divide-solid divide-primary-500"
 >
 	<div class="flex flex-col gap-2">
 		<h2 class="text-3xl mb-4 text-primary-700">Détail du doctorant</h2>

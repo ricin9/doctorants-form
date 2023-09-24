@@ -1,4 +1,4 @@
-import { date, integer, pgTable, serial, varchar } from 'drizzle-orm/pg-core';
+import { integer, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
 import {
 	directorGradePgEnum,
 	doctorateTypePgEnum,
@@ -25,7 +25,7 @@ export const doctorateRegistration = pgTable('doctorate_registration', {
 	),
 
 	file: varchar('file', { length: 255 }),
-	createdAt: date('created_at').defaultNow().notNull()
+	createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull()
 });
 
 export const doctorantDetails = pgTable('doctorant_details', {

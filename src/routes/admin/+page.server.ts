@@ -1,10 +1,9 @@
-// import { redirect } from '@sveltejs/kit';
-// import { getRegistrations } from './getRegistrations';
+import { getRegistrationsCount } from './getRegistrations';
 
-// export async function load({ locals }) {
-// 	if (!locals.session) {
-// 		throw redirect(303, '/login');
-// 	}
+export async function load() {
+	const [{ count }] = await getRegistrationsCount.execute();
 
-// 	return { getRegistrations: getRegistrations };
-// }
+	return {
+		registrationsCount: count
+	};
+}

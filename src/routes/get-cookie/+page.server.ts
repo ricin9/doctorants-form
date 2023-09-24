@@ -1,7 +1,10 @@
+import { dev } from '$app/environment';
 import { createSession } from '$lib/server/session.js';
 
 export async function load({ cookies }) {
-	const sid = await createSession({ uid: '1', role: 'user' });
+	if (dev) {
+		const sid = await createSession({ uid: '1', role: 'admin' });
 
-	cookies.set('sid', sid);
+		cookies.set('sid', sid);
+	}
 }

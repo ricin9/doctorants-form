@@ -16,16 +16,16 @@ export async function GET() {
 	XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
 	// Generate and save to /tmp the XLSX file
-	XLSX.writeFile(workbook, '/tmp/doctorate_reinscriptions.xlsx');
-
-	console.log("XLSX file 'doctorate_reinscriptions.xlsx' has been created.");
+	const filePath = '/tmp/doctorate_reinscriptions.xlsx';
+	XLSX.writeFile(workbook, filePath);
 
 	// send file to the client
-	const filePath = path.resolve('/tmp/example.xlsx');
-	const fileStream = await fs.promises.readFile(filePath);
+	const fileStream = await fs.promises.readFile(path.resolve(filePath));
 	const fileBuffer = Buffer.from(fileStream);
 
 	// delete file
+	await fs.promises.rm(filePath);
+
 	return new Response(fileBuffer, {
 		headers: {
 			'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',

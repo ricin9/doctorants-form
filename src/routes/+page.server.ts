@@ -57,17 +57,18 @@ export const actions = {
 			});
 		}
 
-		const filename = `${UPLOADED_FILE_DEST}/reinscription-${locals.session.uid}.${ext}`;
+		const fileName = `reinscription-${locals.session.uid}.${ext}`;
+		const filePath = `${UPLOADED_FILE_DEST}/${fileName}`;
 
-		await fs.writeFile(filename, Buffer.from(await document.arrayBuffer()));
+		await fs.writeFile(filePath, Buffer.from(await document.arrayBuffer()));
 
 		const updatedReinscription = await updateUserReinscriptionWithFile.execute({
 			id: locals.session.uid,
-			file: filename
+			file: fileName
 		});
 
 		if (updatedReinscription.length === 0) {
-			await fs.rm(filename);
+			await fs.rm(filePath);
 			return fail(500, {
 				error: true,
 				message: 'Une erreur est survenue lors de la mise à jour de votre réinscription'

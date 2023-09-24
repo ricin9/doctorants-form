@@ -6,22 +6,28 @@ import {
 import { user } from '$lib/server/db/schemas/user';
 import { desc, eq, sql } from 'drizzle-orm';
 
-export async function getRegistrations(query: string) {
-	const queryWildcard = `%${query}%`;
+export const getRegistrations = db
+	.select({
+		id: reg.id,
+		nom: regDetails.nom,
+		prenom: regDetails.prenom,
+		email: user.email,
+		telephone: regDetails.telephone,
+		lieuNaissance: regDetails.lieuNaissance,
+		dateNaissance: regDetails.dateNaissance,
+		file: reg.file,
+		createdAt: reg.createdAt
+	})
+	.from(reg)
+	.innerJoin(user, eq(reg.id, user.id))
+	.where(sql`${regDetails.nom} || ' ' || ${regDetails.prenom} ILIKE ${sql.placeholder('query')}`)
+	.innerJoin(regDetails, eq(reg.doctorantDetails, regDetails.id))
+	.orderBy(desc(reg.createdAt))
+	.limit(25);
 
-	return await db
-		.select({
-			nom: regDetails.nom,
-			prenom: regDetails.prenom,
-			email: user.email,
-			telephone: regDetails.telephone,
-			lieuNaissance: regDetails.lieuNaissance,
-			dateNaissance: regDetails.dateNaissance
-		})
-		.from(reg)
-		.innerJoin(user, eq(reg.user, user.id))
-		.where(sql`${regDetails.nom} || ' ' || ${regDetails.prenom} ILIKE ${queryWildcard}`)
-		.innerJoin(regDetails, eq(reg.doctorantDetails, regDetails.id))
-		.orderBy(desc(reg.createdAt))
-		.limit(25);
-}
+export const getRegistrationsCount = db
+	.select({
+		count: sql<number>`COUNT(*)`
+	})
+	.from(reg)
+	.prepare('getRegistrationsCount');

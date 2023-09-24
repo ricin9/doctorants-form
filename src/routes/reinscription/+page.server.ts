@@ -14,7 +14,7 @@ export const load = async ({ locals }) => {
 	// Server API:
 	const form = initialData
 		? await superValidate(initialData as typeof defaultFormValues, schema)
-		: await superValidate(defaultFormValues, schema);
+		: await superValidate(schema);
 
 	// Always return { form } in load and form actions.
 	return { form };
