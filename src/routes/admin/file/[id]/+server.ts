@@ -13,10 +13,10 @@ export async function GET({ params, url }) {
 		});
 	}
 
-	const type = url.searchParams.get('type'); // demande or recu
+	const isDemande = url.searchParams.get('type') == 'demande'; // demande or recu
 
 	const [reg] = await getRegistrationFilename.execute({ id: +params.id });
-	const fileName = type == 'recu' ? reg.recu : reg.file;
+	const fileName = isDemande ? reg.file : reg.recu;
 
 	if (!fileName) {
 		return new Response(null, {
@@ -32,12 +32,19 @@ export async function GET({ params, url }) {
 		fileBuffer = await fs.readFile(path.resolve(filePath));
 	} catch (e) {
 		// reset file field if file not found
-		console.log(type, fileName);
-		await db
-			.update(doctorateRegistration)
-			.set(type == 'recu' ? { recuPayment: null } : { file: null })
-			.where(eq(doctorateRegistration.file, fileName))
-			.execute();
+		if (isDemande) {
+			await db
+				.update(doctorateRegistration)
+				.set({ file: null })
+				.where(eq(doctorateRegistration.file, fileName))
+				.execute();
+		} else {
+			await db
+				.update(doctorateRegistration)
+				.set({ recuPayment: null })
+				.where(eq(doctorateRegistration.recuPayment, fileName))
+				.execute();
+		}
 		return new Response(null, {
 			status: 404
 		});
