@@ -6,14 +6,17 @@ import { doctorateRegistration } from '$lib/server/db/schemas/registration.js';
 import { eq } from 'drizzle-orm';
 import { getRegistrationFilename } from './getFilename';
 
-export async function GET({ params }) {
+export async function GET({ params, url }) {
 	if (!parseInt(params.id)) {
 		return new Response(null, {
 			status: 404
 		});
 	}
 
-	const [{ file: fileName }] = await getRegistrationFilename.execute({ id: +params.id });
+	const type = url.searchParams.get('type'); // demande or recu
+
+	const [reg] = await getRegistrationFilename.execute({ id: +params.id });
+	const fileName = type == 'recu' ? reg.recu : reg.file;
 
 	if (!fileName) {
 		return new Response(null, {
@@ -24,13 +27,15 @@ export async function GET({ params }) {
 	const filePath = `${UPLOADED_FILE_DEST}/${fileName}`;
 
 	let fileBuffer: Buffer;
-	// send file to the client
+
 	try {
 		fileBuffer = await fs.readFile(path.resolve(filePath));
 	} catch (e) {
+		// reset file field if file not found
+		console.log(type, fileName);
 		await db
 			.update(doctorateRegistration)
-			.set({ file: null })
+			.set(type == 'recu' ? { recuPayment: null } : { file: null })
 			.where(eq(doctorateRegistration.file, fileName))
 			.execute();
 		return new Response(null, {

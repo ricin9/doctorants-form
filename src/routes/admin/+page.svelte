@@ -54,6 +54,7 @@
 			<TableHeadCell>Lieu de naissance</TableHeadCell>
 			<TableHeadCell>Date de naissance</TableHeadCell>
 			<TableHeadCell class="max-w-[8rem]">A uploadé la réinscription final?</TableHeadCell>
+			<TableHeadCell class="max-w-[8rem]">A uploadé le récu de paiment?</TableHeadCell>
 			<TableHeadCell class="max-w-[6rem]">Plus de détail</TableHeadCell>
 			<TableHeadCell class="max-w-[6rem]">Date creation</TableHeadCell>
 		</TableHead>
@@ -76,7 +77,19 @@
 						<TableBodyCell>
 							{#if item.file}
 								<a
-									href={'/admin/file/' + item.id}
+									href={`/admin/file/${item.id}?type=demande`}
+									target="_blank"
+									class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+									>Document</a
+								>
+							{:else}
+								Non
+							{/if}
+						</TableBodyCell>
+						<TableBodyCell>
+							{#if item.recu}
+								<a
+									href={`/admin/file/${item.id}?type=recu`}
 									target="_blank"
 									class="font-medium text-primary-600 hover:underline dark:text-primary-500"
 									>Document</a

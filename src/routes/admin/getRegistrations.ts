@@ -16,6 +16,7 @@ export const getRegistrations = db
 		lieuNaissance: regDetails.lieuNaissance,
 		dateNaissance: regDetails.dateNaissance,
 		file: reg.file,
+		recu: reg.recuPayment,
 		createdAt: reg.createdAt
 	})
 	.from(reg)

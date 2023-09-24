@@ -3,7 +3,7 @@ import { doctorateRegistration as reg } from '$lib/server/db/schemas/registratio
 import { eq, sql } from 'drizzle-orm';
 
 export const getRegistrationFilename = db
-	.select({ file: reg.file })
+	.select({ file: reg.file, recu: reg.recuPayment })
 	.from(reg)
 	.where(eq(reg.id, sql.placeholder('id')))
 	.limit(1)

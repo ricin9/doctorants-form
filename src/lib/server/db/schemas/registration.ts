@@ -25,6 +25,7 @@ export const doctorateRegistration = pgTable('doctorate_registration', {
 	),
 
 	file: varchar('file', { length: 255 }),
+	recuPayment: varchar('recu_payment', { length: 255 }),
 	createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull()
 });
 

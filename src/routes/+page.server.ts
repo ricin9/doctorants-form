@@ -16,6 +16,15 @@ const updateUserReinscriptionWithFile = db
 	.returning()
 	.prepare('getUserReinscription');
 
+const updateUserReinscriptionWithRecu = db
+	.update(doctorateRegistration)
+	.set({
+		recuPayment: sql.placeholder('file') as unknown as string
+	})
+	.where(eq(doctorateRegistration.id, sql.placeholder('id')))
+	.returning()
+	.prepare('getUserReinscription');
+
 export async function load({ locals }) {
 	if (!locals.session) {
 		throw redirect(307, '/login');
@@ -25,11 +34,15 @@ export async function load({ locals }) {
 	}
 
 	const [reg] = await getUserReinscription.execute({ id: locals.session.uid });
-	return { hasReinscription: Boolean(reg), hasUploadedFile: Boolean(reg && reg.file) };
+	return {
+		hasReinscription: Boolean(reg),
+		hasUploadedFile: Boolean(reg && reg.file),
+		hasUploadedRecu: Boolean(reg && reg.recuPayment)
+	};
 }
 
 export const actions = {
-	default: async ({ request, locals }) => {
+	demande: async ({ request, locals }) => {
 		if (!locals.session) {
 			throw redirect(307, '/login');
 		}
@@ -74,8 +87,63 @@ export const actions = {
 				message: 'Une erreur est survenue lors de la mise à jour de votre réinscription'
 			});
 		}
+
+		// success
 		return {
-			success: true
+			demande: true
+		};
+	},
+
+	//same thing as above but for recu
+	recu: async ({ request, locals }) => {
+		if (!locals.session) {
+			throw redirect(307, '/login');
+		}
+
+		const formData = Object.fromEntries(await request.formData());
+		const document = formData.document as File;
+		if (!document || document.name === 'undefined') {
+			return fail(400, {
+				error: true,
+				message: 'Vous devez fournir un document'
+			});
+		}
+		if (document.size > 1024 * 1024 * 5) {
+			return fail(400, {
+				error: true,
+				message: 'La taille du document ne doit pas dépasser 5 Mo'
+			});
+		}
+		// check if extension is pdf or png
+		const ext = document.name.split('.').pop();
+		if (ext !== 'pdf' && ext !== 'png' && ext !== 'jpg' && ext !== 'jpeg') {
+			return fail(400, {
+				error: true,
+				message: 'Le document doit être au format PDF, PNG, JPG ou JPEG'
+			});
+		}
+
+		const fileName = `recu-${locals.session.uid}.${ext}`;
+		const filePath = `${UPLOADED_FILE_DEST}/${fileName}`;
+
+		await fs.writeFile(filePath, Buffer.from(await document.arrayBuffer()));
+
+		const updatedReinscription = await updateUserReinscriptionWithRecu.execute({
+			id: locals.session.uid,
+			file: fileName
+		});
+
+		if (updatedReinscription.length === 0) {
+			await fs.rm(filePath);
+			return fail(500, {
+				error: true,
+				message: 'Une erreur est survenue lors de la mise à jour de votre réinscription'
+			});
+		}
+
+		// success
+		return {
+			recu: true
 		};
 	}
 };
