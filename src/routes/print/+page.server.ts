@@ -14,17 +14,19 @@ export async function load({ locals }) {
 	if (!locals.session) {
 		throw redirect(307, '/login');
 	}
-	const data = await db
+	const [data] = await db
 		.select()
 		.from(registration)
 		.where(eq(registration.id, +locals.session.uid))
 		.innerJoin(details, eq(registration.doctorantDetails, details.id))
 		.innerJoin(director, eq(registration.thesisDirectorDetails, director.id))
-		.leftJoin(coDirector, eq(registration.thesisCoDirectorDetails, director.id))
+		.leftJoin(coDirector, eq(registration.thesisCoDirectorDetails, coDirector.id))
 		.limit(1);
 
-	if (data.length === 0) {
+	if (!data) {
 		throw redirect(307, '/');
 	}
-	return { registration: data[0] };
+
+	console.log(data);
+	return { registration: data };
 }
