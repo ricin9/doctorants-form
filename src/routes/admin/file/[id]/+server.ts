@@ -50,9 +50,5 @@ export async function GET({ params, url }) {
 		});
 	}
 
-	return new Response(fileBuffer, {
-		headers: {
-			'Content-Disposition': `attachment; filename=${fileName}`
-		}
-	});
+	return new Response(fileBuffer);
 }

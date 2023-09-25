@@ -13,8 +13,13 @@ export async function GET() {
 	for (const file of files) {
 		const filePath = `${SOURCE_DIR}/${file}`;
 		const stats = await fs.stat(filePath);
-
-		if (stats.isFile()) {
+		const ext = file.split('.').pop();
+		const valid =
+			stats.isFile() &&
+			(file.startsWith('recu') || file.startsWith('reinscription')) && // only demande and recu files
+			ext && // no files without extension
+			['jpg', 'jpeg', 'png', 'pdf'].includes(ext); // only images and pdfs
+		if (valid) {
 			const fileContent = await fs.readFile(filePath);
 			zip.file(file, fileContent);
 		}

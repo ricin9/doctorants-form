@@ -73,12 +73,12 @@
 				></Li
 			>
 			<Li
-				>Upload reçu du paiment <CheckOrNot success={hasUploadedRecu} />
+				>Upload reçu du paiement <CheckOrNot success={hasUploadedRecu} />
 				<Helper helperClass="text-sm flex"
 					><div class="w-64">Uploader ci-dessous</div>
 					{#if hasUploadedRecu}
 						<a
-							href="/reinscription/recu-paiment"
+							href="/reinscription/recu-paiement"
 							download
 							class="font-medium text-primary-600 hover:underline dark:text-primary-500 mr-2"
 							>Télécharger votre fichier</a
@@ -97,7 +97,7 @@
 			/>
 		</div>
 		<div>
-			<UploadFile label="Uploader le reçu du paiment" action="recu" disabled={!hasReinscription} />
+			<UploadFile label="Uploader le reçu du paiement" action="recu" disabled={!hasReinscription} />
 		</div>
 	</div>
 </div>

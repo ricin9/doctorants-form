@@ -1,7 +1,5 @@
 import * as XLSX from 'xlsx';
 import { getAllRegistrations } from './getRegistrations';
-import path from 'path';
-import fs from 'fs';
 
 export async function GET() {
 	const data = await getAllRegistrations.execute();
@@ -13,18 +11,10 @@ export async function GET() {
 	const worksheet = XLSX.utils.json_to_sheet(data);
 
 	// Add the worksheet to the workbook
-	XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+	XLSX.utils.book_append_sheet(workbook, worksheet, 'Liste des réinscriptions');
 
-	// Generate and save to /tmp the XLSX file
-	const filePath = '/tmp/doctorate_reinscriptions.xlsx';
-	XLSX.writeFile(workbook, filePath);
-
-	// send file to the client
-	const fileStream = await fs.promises.readFile(path.resolve(filePath));
-	const fileBuffer = Buffer.from(fileStream);
-
-	// delete file
-	await fs.promises.rm(filePath);
+	// Generate file in memory (file buffer)
+	const fileBuffer = XLSX.write(workbook, { type: 'buffer' });
 
 	return new Response(fileBuffer, {
 		headers: {

@@ -37,7 +37,10 @@
 	<div>
 		<span class="font-medium">Nombre de réinscriptions:</span>
 		{data.registrationsCount}
-		<Button size="xs" href="/admin/export" download>Exporter tous les données</Button>
+		<Button size="xs" href="/admin/export" download>Exporter toutes les données</Button>
+		<Button size="xs" href="/admin/export-files-archive" download
+			>Exporter toutes les fichiers de demandes et récus du paiement
+		</Button>
 	</div>
 
 	<TableSearch
@@ -54,7 +57,7 @@
 			<TableHeadCell>Lieu de naissance</TableHeadCell>
 			<TableHeadCell>Date de naissance</TableHeadCell>
 			<TableHeadCell class="max-w-[8rem]">A uploadé la réinscription final?</TableHeadCell>
-			<TableHeadCell class="max-w-[8rem]">A uploadé le récu de paiment?</TableHeadCell>
+			<TableHeadCell class="max-w-[8rem]">A uploadé le récu de paiement?</TableHeadCell>
 			<TableHeadCell class="max-w-[6rem]">Plus de détail</TableHeadCell>
 			<TableHeadCell class="max-w-[6rem]">Date creation</TableHeadCell>
 		</TableHead>
