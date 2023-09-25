@@ -11,6 +11,7 @@ import { asc, eq, sql } from 'drizzle-orm';
 const coDirector = alias(director, 'coDirector');
 
 const selectedValues = {
+	id: reg.id,
 	'matricule bac': regDetails.matriculeBac,
 	'anne de bac': regDetails.anneBac,
 	nom: regDetails.nom,
@@ -41,7 +42,8 @@ const selectedValues = {
 	'nom co-directeur': coDirector.nom,
 	'prenom co-directeur': coDirector.prenom,
 	'grade co-directeur': coDirector.grade,
-	'etablissement co-directeur': coDirector.etablissement
+	'etablissement co-directeur': coDirector.etablissement,
+	'date creation': reg.createdAt
 };
 
 export const getAllRegistrations = db
