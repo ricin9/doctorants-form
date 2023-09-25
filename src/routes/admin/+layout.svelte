@@ -4,6 +4,6 @@
 
 <Header />
 <slot />
-<footer class="text-sm font-light justify-center mt-8 flex mb-2">
+<footer class="text-sm font-light mt-8 absolute text-center bottom-1 left-0 right-0">
 	Développé par Miloudi Mohamed
 </footer>
