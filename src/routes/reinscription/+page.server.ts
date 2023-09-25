@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { schema } from './doc.registration.schema';
 import { createDoctorateRegistration } from './registration.query';
-import { defaultFormValues } from './defaultFormValues';
+import type { defaultFormValues } from './defaultFormValues';
 import { getReinscriptionData } from './getInitialData';
 
 export const load = async ({ locals }) => {
@@ -14,7 +14,7 @@ export const load = async ({ locals }) => {
 	// Server API:
 	const form = initialData
 		? await superValidate(initialData as typeof defaultFormValues, schema)
-		: await superValidate(defaultFormValues, schema);
+		: await superValidate(schema);
 
 	// Always return { form } in load and form actions.
 	return { form };
