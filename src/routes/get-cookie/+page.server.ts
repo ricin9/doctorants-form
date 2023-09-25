@@ -4,7 +4,7 @@ import { redirect } from '@sveltejs/kit';
 
 export async function load({ cookies }) {
 	if (dev) {
-		const sid = await createSession({ uid: '1', role: 'admin' });
+		const sid = await createSession({ uid: '1', role: 'user' });
 
 		cookies.set('sid', sid);
 	}

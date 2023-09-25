@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1695648857587,
+      "tag": "0000_elite_tyrannus",
+      "breakpoints": true
+    }
+  ]
+}
