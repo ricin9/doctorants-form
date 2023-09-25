@@ -3,4 +3,6 @@
 	import '../app.css';
 </script>
 
-<slot />
+<main class="from-primary-50 to-primary-100 bg-gradient-to-tl">
+	<slot />
+</main>

@@ -18,6 +18,7 @@
 	import SelectSearch from '$lib/components/form/SelectSearch.svelte';
 	import SelectInput from '$lib/components/form/SelectInput.svelte';
 	import TextareaInput from '$lib/components/form/TextareaInput.svelte';
+	import Header from '$lib/components/Header.svelte';
 
 	export let data;
 

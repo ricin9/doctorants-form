@@ -7,6 +7,7 @@
 	import UploadFile from './UploadFile.svelte';
 	export let data;
 	const { hasReinscription, hasUploadedFile, hasUploadedRecu } = data;
+	import Header from '$lib/components/Header.svelte';
 	export let error = '';
 	// component props
 
@@ -30,8 +31,8 @@
 	};
 </script>
 
+<Header />
 <div class="px-24 w-screen mx-auto mt-4 flex flex-col">
-	<h1 class="text-4xl text-primary-700 flex justify-center">Université Mascara</h1>
 	<h1 class="text-3xl text-primary-700 flex justify-center mb-8">Réinscriptions en doctorat</h1>
 	<div class="mb-8">
 		<Heading tag="h5">Réinscriptions en doctorat</Heading>
@@ -43,9 +44,17 @@
 					><a
 						href="/reinscription/"
 						target="_blank"
-						class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+						class="font-medium text-primary-600 hover:underline dark:text-primary-500 w-64 inline-block"
 						>Remplissez ou modifiez le formulaire</a
-					></Helper
+					>
+					{#if hasReinscription}
+						<a
+							href="/print"
+							download
+							class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+							>Imprimer votre demande</a
+						>
+					{/if}</Helper
 				>
 			</Li>
 			<Li
@@ -53,7 +62,7 @@
 					success={hasUploadedFile}
 				/>
 				<Helper helperClass="text-sm flex "
-					><div class="w-48">Uploader ci-dessous</div>
+					><div class="w-64">Uploader ci-dessous</div>
 					{#if hasUploadedFile}
 						<a
 							href="/reinscription/scanned-document"
@@ -67,7 +76,7 @@
 			<Li
 				>Upload reçu du paiment <CheckOrNot success={hasUploadedRecu} />
 				<Helper helperClass="text-sm flex"
-					><div class="w-48">Uploader ci-dessous</div>
+					><div class="w-64">Uploader ci-dessous</div>
 					{#if hasUploadedRecu}
 						<a
 							href="/reinscription/recu-paiment"
@@ -93,3 +102,7 @@
 		</div>
 	</div>
 </div>
+
+<footer class="text-sm font-light justify-center mt-8 flex mb-2">
+	Développé par Miloudi Mohamed
+</footer>

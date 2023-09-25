@@ -16,7 +16,7 @@
 <form
 	method="POST"
 	use:enhance
-	class="flex max-w-md flex-col gap-4 mx-auto mt-12 border rounded px-8 pt-6 pb-8 mb-4"
+	class="flex max-w-md flex-col gap-4 mx-auto mt-12 ring rounded px-8 pt-6 pb-8 mb-4"
 >
 	<h2 class="text-3xl mb-4 mx-auto">Connexion</h2>
 
