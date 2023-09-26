@@ -1,6 +1,16 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Alert, Button, Fileupload, Heading, Helper, Label, Li, List } from 'flowbite-svelte';
+	import {
+		Alert,
+		Button,
+		Fileupload,
+		Heading,
+		Helper,
+		Label,
+		Li,
+		List,
+		Tooltip
+	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import { CheckSolid } from 'flowbite-svelte-icons';
 	import CheckOrNot from './CheckOrNot.svelte';
@@ -32,27 +42,38 @@
 </script>
 
 <Header />
+
 <div class="px-24 w-screen mx-auto mt-4 flex flex-col">
 	<h1 class="text-3xl text-primary-700 flex justify-center mb-8">Réinscriptions en doctorat</h1>
+	<a
+		href="/logout"
+		class="font-medium ml-auto text-primary-600 hover:underline dark:text-primary-500 w-64 inline-block"
+		>Déconnexion</a
+	>
 	<div class="mb-8">
 		<Heading tag="h5">Réinscriptions en doctorat</Heading>
-		<List position="outside" class="flex flex-col gap-1">
+		<List position="outside" list="decimal" class="flex flex-col gap-1">
 			<Li
 				>Formulaire de réinscription
 				<CheckOrNot success={hasReinscription} />
-				<Helper helperClass="text-sm"
+				<Helper helperClass="text-sm flex flex-col gap-1"
 					><a
 						href="/reinscription/"
-						target="_blank"
 						class="font-medium text-primary-600 hover:underline dark:text-primary-500 w-64 inline-block"
 						>Remplissez ou modifiez le formulaire</a
 					>
-					{#if hasReinscription}
+					{#if !hasReinscription}
 						<a
 							href="/print"
-							class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+							target="_blank"
+							class="font-medium text-primary-600 hover:underline dark:text-primary-500 w-64 inline-block"
 							>Imprimer votre demande</a
 						>
+					{:else}
+						<a href="#" class="font-medium text-gray-400 dark:text-primary-500 w-64 inline-block"
+							>Imprimer votre demande</a
+						>
+						<Tooltip>Vous devez d'abord remplir le formulaire</Tooltip>
 					{/if}</Helper
 				>
 			</Li>

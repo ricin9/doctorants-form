@@ -3,7 +3,7 @@
 
 	export let data;
 	onMount(() => {
-		window.print();
+		setTimeout(() => window.print(), 1000);
 	});
 	const { doctorant_details: details, directeur_these: director, coDirector } = data.registration;
 	const whiteSquare = '□';

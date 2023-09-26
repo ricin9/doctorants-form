@@ -38,6 +38,6 @@ export const actions = {
 			console.log(err);
 			return fail(500, { form });
 		}
-		throw redirect(303, '/print');
+		throw redirect(303, '/');
 	}
 };
