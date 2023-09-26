@@ -15,7 +15,7 @@ export const load = async ({ locals }) => {
 	await db
 		.insert(user)
 		.values({
-			email: 'admin@univ-mascara.dz',
+			email: 'vrpg@univ-mascara.dz',
 			password: await generateHash(process.env.ADMIN_PASSWORD),
 			role: 'admin'
 		})
