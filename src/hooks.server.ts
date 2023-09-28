@@ -6,7 +6,8 @@ export const handle = (async ({ event, resolve }) => {
 	const sid = cookies.get('sid');
 	if (sid) {
 		const session = await getSession(sid);
-		if (session) {
+		if (session && session.uid) {
+			console.log('SESSION IS TRUTHY');
 			event.locals.session = session;
 		} else {
 			// remove invalid/expired/unknown cookie
