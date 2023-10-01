@@ -62,7 +62,7 @@
 						class="font-medium text-primary-600 hover:underline dark:text-primary-500 w-64 inline-block"
 						>Remplissez ou modifiez le formulaire</a
 					>
-					{#if !hasReinscription}
+					{#if hasReinscription}
 						<a
 							href="/print"
 							target="_blank"
@@ -70,8 +70,9 @@
 							>Imprimer votre demande</a
 						>
 					{:else}
-						<a href="#" class="font-medium text-gray-400 dark:text-primary-500 w-64 inline-block"
-							>Imprimer votre demande</a
+						<span
+							class="font-medium text-gray-400 dark:text-primary-500 w-64 inline-block hover:cursor-pointer"
+							>Imprimer votre demande</span
 						>
 						<Tooltip>Vous devez d'abord remplir le formulaire</Tooltip>
 					{/if}</Helper
